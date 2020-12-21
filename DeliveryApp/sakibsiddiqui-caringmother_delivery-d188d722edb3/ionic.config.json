@@ -1,0 +1,7 @@
+{
+  "name": "Caring Mother Vendor",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

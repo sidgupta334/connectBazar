@@ -1,0 +1,113 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-icon name="arrow-back" routerLink="/all-order"></ion-icon>
+        </ion-buttons>
+        <ion-title style="font-size: 20px;">VIEW ORDER</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="appBackground">
+    <ion-grid>
+        <ion-row class="order-row">
+            <ion-col class="order-col">Order ID: <span style="font-weight: bold;">{{viewOrder?.orderId}}</span></ion-col>
+        </ion-row>
+
+        <ion-row class="order-title">
+            <ion-col size="6">Order Date</ion-col>
+            <ion-col size="6" id="order-value">{{viewOrder?.orderDate}}</ion-col>
+            <ion-col size="6">Delivery Date</ion-col>
+            <ion-col size="6" id="order-value">{{viewOrder?.deliveryDate}}</ion-col>
+            <ion-col size="6">Order Status</ion-col>
+            <ion-col size="6" id="order-value" style="color: #1FCA1C;">{{viewOrder?.orderStatus}}</ion-col>
+            <ion-col size="6">Item Count</ion-col>
+            <ion-col size="6" id="order-value">{{viewOrder?.netQuantity}}</ion-col>
+        </ion-row>
+    </ion-grid>
+
+    <ion-row class="order-item">
+        <ion-col class="order-col">ORDER ITEMS :</ion-col>
+    </ion-row>
+
+    <ion-card>
+        <ion-row *ngFor="let item of viewOrder?.products" style="border-bottom: 1px solid aquamarine;">
+
+            <ion-col size="3">
+                <img [src]="item.url" alt="grocrica" />
+            </ion-col>
+
+            <ion-col size="6">
+                <p>{{item.productName}} <span>({{item.brand}}) </span> </p>
+                <div style="margin-top: 25px;">
+                    <p><span><del>₹{{item.oldPrice}}</del></span> <span style="margin-left: 15px;"> ₹ {{item.newPrice}} × {{item.quantity}} </span>
+                    </p>
+                </div>
+            </ion-col>
+
+            <ion-col>
+                <p style="text-align: end;padding-right: 10px;">₹ {{item.total}}</p>
+            </ion-col>
+
+        </ion-row>
+    </ion-card>
+
+    <ng-container *ngIf="viewRate == true">
+        <ng-container *ngIf="viewOrder?.orderStatus === 'COMPLETED'">
+            <ion-button style="margin-right: 560px;" (click)="review(viewOrder)">RATE YOUR ORDER</ion-button>
+        </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="viewRate == false">
+        <ng-container *ngIf="viewOrder?.orderStatus === 'COMPLETED'">
+            <ion-button style="margin-right: 560px;" (click)="viewFeedback(viewOrder)">View Feedback</ion-button>
+        </ng-container>
+    </ng-container>
+
+
+
+</ion-content>
+
+<div style="background-color: rgb(6, 15, 66);">
+
+    <ion-row class="order-total" id="text-color">
+
+        <ng-container *ngIf="viewOrder?.orderStatus === 'CONFIRMED'">
+            <ion-col size="6">Status</ion-col>
+            <ion-col size="6" id="order-value">{{viewOrder?.orderStatus}}</ion-col>
+        </ng-container>
+
+
+        <ng-container *ngIf="viewOrder?.orderStatus === 'CANCELLED'">
+            <ion-col size="6">Status</ion-col>
+            <ion-col size="6" id="order-value" style="color: red;">{{viewOrder?.orderStatus}}</ion-col>
+        </ng-container>
+
+
+        <ng-container *ngIf="viewOrder?.orderStatus === 'COMPLETED'">
+            <ion-col size="6">Status</ion-col>
+            <ion-col size="6" id="order-value" style="color: #1FCA1C;">{{viewOrder?.orderStatus}}</ion-col>
+        </ng-container>
+
+        <ion-col size="6">Total Amount</ion-col>
+        <ion-col size="6" id="order-value">₹ {{viewOrder?.oldTotal}}</ion-col>
+
+        <ion-col size="6">Discount received from us</ion-col>
+        <ion-col size="6" id="order-value" style="color: #cabe1c;">₹ {{ viewOrder?.discountReceived}}</ion-col>
+
+        <ion-col size="6">Net Amount</ion-col>
+        <ion-col size="6" id="order-value">₹ {{viewOrder?.netAmount}}</ion-col>
+
+        <ion-col size="6">Discount Applied</ion-col>
+        <ion-col size="6" id="order-value" style="color: #1FCA1C;">₹ {{viewOrder?.discountApplied}}</ion-col>
+
+        <ion-col size="6" style="font-weight: bold;">Final Amount</ion-col>
+        <ion-col size="6" style="font-weight: bold;" id="order-value">₹ {{viewOrder?.finalTotal}}</ion-col>
+    </ion-row>
+
+    <ng-container *ngIf="viewOrder?.orderStatus === 'ORDERED'">
+        <button class="button des-button" (click)="cancelOrder(viewOrder)"> Cancel Order</button>
+    </ng-container>
+
+
+</div>

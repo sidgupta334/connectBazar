@@ -1,0 +1,32 @@
+// .background {
+//   --background:rgb(6, 15, 66);
+//   margin-top:200px!important;
+// }
+ion-item {
+    --background: rgba(0, 0, 0, 0) !important;
+    background-color: transparent;
+    --border-color: #fff;
+    // --border-color: rgba(0,0,0,0)!important;
+}
+
+.text {
+    color: #fff;
+    text-align: center;
+    font-size: 30px;
+    margin-top: 40px;
+}
+
+ion-toolbar {
+    --background: transparent;
+    --ion-color-base: transparent !important;
+    height: 94px;
+}
+
+ion-icon {
+    color: #fff;
+    font-size: 30px;
+}
+
+ion-input {
+    color: #fff;
+}

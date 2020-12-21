@@ -1,0 +1,126 @@
+<!-- <ion-icon name="arrow-back" routerLink="/login"></ion-icon>
+<img src="../../assets/login.png" alt="caring mother" style="    
+background-color: rgb(6, 15, 66);
+object-fit: cover;"  /> -->
+
+<!-- <img src="../../assets/login.png" style="position: fixed;background-color: rgb(6, 15, 66);" alt="caring mother"/> -->
+<!-- <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-icon name="arrow-back" routerLink="/login"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar> -->
+
+
+<ion-content class="background" style="background-color: rgb(6, 15, 66);">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-icon name="arrow-back" routerLink="/login"></ion-icon>
+        </ion-buttons>
+    </ion-toolbar>
+    <p class="text">Get Onboard <br>Register Here</p>
+
+    <ion-grid>
+        <ion-card>
+            <form class="ion-padding" [formGroup]="SignUpForm" (ngSubmit)="registerUser(SignUpForm.value)">
+                <ion-row>
+                    <ion-col class="ion-float-right" style="border-bottom: 1px solid #fff;">
+                        <ion-item lines="none">
+                            <ion-label position="fixed" style="color: #fff;">
+                                FullName</ion-label>
+
+                            <ion-input type="text" formControlName="fullName">
+                            </ion-input>
+                        </ion-item>
+                        <div id="errorStyle" *ngIf="checkValid && f.fullName.errors" class="invalid-feedback">
+                            <div *ngIf="f.fullName.errors.required">*FullName is required</div>
+                        </div>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col class="ion-float-right" style="border-bottom: 1px solid #fff;">
+                        <ion-item lines="none">
+                            <ion-label position="fixed" style="color: #fff;">
+                                Mobile</ion-label>
+                            <ion-input type="text" formControlName="mobile">
+                            </ion-input>
+                        </ion-item>
+                        <div id="errorStyle" *ngIf="checkValid && f.mobile.errors" class="invalid-feedback">
+                            <div *ngIf="f.mobile.errors.required">*Mobile no is required</div>
+                            <div *ngIf="f.mobile.errors.pattern">Enter valid *Mobile No</div>
+                        </div>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col style="border-bottom: 1px solid #fff;">
+                        <ion-item lines="none">
+                            <ion-label position="fixed" style="color: #fff;">
+                                Email</ion-label>
+                            <ion-input type="text" formControlName="email">
+                            </ion-input>
+                        </ion-item>
+                        <div id="errorStyle" *ngIf="checkValid && f.email.errors" class="invalid-feedback">
+                            <div *ngIf="f.email.errors.required">*Email is required</div>
+                            <div *ngIf="f.email.errors.email">Enter valid *email</div>
+                        </div>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col style="border-bottom: 1px solid #fff;">
+                        <ion-item lines="none">
+                            <ion-label position="fixed" style="color: #fff;">
+                                Password</ion-label>
+                            <ion-input type="text" formControlName="password">
+                            </ion-input>
+                        </ion-item>
+                        <div id="errorStyle" *ngIf="checkValid && f.password.errors" class="invalid-feedback">
+                            <div *ngIf="f.password.errors.required">*Password is required</div>
+                        </div>
+                    </ion-col>
+                </ion-row>
+
+
+
+                <ion-row>
+                    <ion-col style="border-bottom: 1px solid #fff;">
+                        <ion-item lines="none">
+                            <ion-label style="color: #fff;">DOB</ion-label>
+                            <ion-datetime value="1990-02-19" formControlName="dob" style="color: #fff;" style="padding-right: 20px;color: #fff;">
+
+                            </ion-datetime>
+                            <ion-icon name="calendar-outline" style="color: #fff;"></ion-icon>
+                        </ion-item>
+
+                        <div id="errorStyle" *ngIf="checkValid && f.dob.errors" class="invalid-feedback">
+                            <div *ngIf="f.dob.errors.required">*Dob is required</div>
+                        </div>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col style="border-bottom: 1px solid #fff;">
+                        <ion-item lines="none">
+                            <ion-label position="fixed" style="color: #fff;">
+                                Gender</ion-label>
+                            <ion-select style="color: #fff;
+              position: absolute;
+              right: 10px;" placeholder="Select" formControlName="gender">
+                                <ion-select-option value="female" style="color: #fff;">Female</ion-select-option>
+                                <ion-select-option value="male" style="color: #fff;">Male</ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                        <div id="errorStyle" *ngIf="checkValid && f.gender.errors" class="invalid-feedback">
+                            <div *ngIf="f.gender.errors.required">*Gender is required</div>
+                        </div>
+                    </ion-col>
+                </ion-row>
+
+                <button class="button-submit des-button" color="primary" type="ngSubmit">
+          Sign Up
+        </button>
+            </form>
+        </ion-card>
+    </ion-grid>
+</ion-content>

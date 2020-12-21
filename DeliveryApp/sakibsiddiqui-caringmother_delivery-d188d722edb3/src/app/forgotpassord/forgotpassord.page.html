@@ -1,0 +1,90 @@
+
+<ion-content class="background"  style="background-color: rgb(6, 15, 66);">
+
+
+
+  <ng-container *ngIf="forgotPassword; then forgotEmailForm"></ng-container>
+  <ng-container *ngIf="otpPost; then otpEnterForm"></ng-container>
+
+ <ng-template #forgotEmailForm> 
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-icon name="arrow-back" routerLink="/login"></ion-icon>
+     </ion-buttons>
+</ion-toolbar>
+    <ion-grid>
+      <p class="text">Forgot your password? <br> Let's recover it</p>
+      <ion-card>
+      <form class="ion-padding" [formGroup]="EmailForm" (ngSubmit)="getEmail(EmailForm.value)">
+
+        <ion-row >
+          <ion-col class="ion-float-right">
+            <div>
+              <ion-item  style="background-color: transparent;">
+                <ion-label position="fixed" style="color: #919090;">
+                  Email 
+                </ion-label>
+                <ion-input  type="text" formControlName="Email" style="color: #fff;margin-left: -15px;">  </ion-input>
+              </ion-item>
+              <div id="errorStyle" *ngIf="checkValid && f.Email.errors" class="invalid-feedback">
+                <div *ngIf="f.Email.errors.required">*Email is required</div>
+                <div *ngIf="f.Email.errors.email" >Enter valid *email</div>
+            </div>
+            </div>
+          </ion-col>
+
+          <button class="button-submit"  color="primary" type="ngSubmit">
+            Send OTP</button>
+       
+        </ion-row>
+      </form>
+    </ion-card>
+    </ion-grid>
+  </ng-template>
+
+
+  <ng-template #otpEnterForm> 
+    <ion-toolbar>
+      <ion-buttons slot="start"  (click)="route()">
+        <ion-icon name="arrow-back"></ion-icon>
+       </ion-buttons>
+  </ion-toolbar>
+  <ion-grid>
+    <p class="text">Forgot your password? <br> Let's recover it</p>
+    <ion-card>
+    <form class="ion-padding" [formGroup]="OtpForm" (ngSubmit)="postOtp(OtpForm.value)">
+      <ion-row>
+        <ion-col class="ion-float-right">
+          <div>
+            <ion-item class="input-password">
+              <ion-label position="fixed" style="color: #919090;">
+                New Password</ion-label>
+              <ion-input style="color: #fff;" type="password"  formControlName="newPassword">
+              </ion-input>
+            </ion-item>
+            <div id="errorStyle" *ngIf="otpFormValid && frmValid.newPassword.errors" class="invalid-feedback">
+              <div *ngIf="frmValid.newPassword.errors.required">*Password is required</div>
+          </div>
+            <ion-item class="input-password">
+              <ion-label position="fixed" style="color: #919090;">
+                OTP</ion-label>
+              <ion-input style="color: #fff;" type="text"  formControlName="otp">
+              </ion-input>
+            </ion-item>
+            <div id="errorStyle" *ngIf="otpFormValid && frmValid.otp.errors" class="invalid-feedback">
+              <div *ngIf="frmValid.otp.errors.required">*Otp is required</div>
+          
+          </div>
+          </div>
+        </ion-col>
+
+        <button  class="button-submit" color="primary"color="primary"  type="ngSubmit">
+          Update Password</button>
+ 
+      </ion-row>
+    </form>
+    </ion-card>
+  </ion-grid>
+  </ng-template>
+
+</ion-content>

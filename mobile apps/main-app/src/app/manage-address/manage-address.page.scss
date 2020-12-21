@@ -1,0 +1,97 @@
+.background {
+    --background: #050714;
+}
+
+ion-badge {
+    border-radius: 50%;
+    height: 23px;
+    width: 23px;
+    left: 20px;
+    font-weight: bolder;
+    top: 9px;
+    padding: 4px;
+    background-color: #1bb916;
+}
+
+h1 {
+    font-family: OpenSans-Light;
+    font-size: 29px;
+    line-height: 30px;
+    text-align: center;
+    color: #fff;
+}
+
+.AddressTYpe {
+    border-bottom: 1px solid #fff;
+    font-family: OpenSans-Light;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    color: #fff;
+}
+
+.Address {
+    font-family: OpenSans-Light;
+    font-style: normal;
+    font-size: 16px;
+    text-align: left;
+    color: #fff;
+}
+
+.AddressValue {
+    font-family: OpenSans-Light;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: left;
+    color: #fff;
+    padding-left: 1px;
+    padding-right: 1px;
+}
+
+#align {
+    float: left;
+    text-align: left;
+}
+
+.FabPosition {
+    margin-top: 24px;
+    text-align: end;
+    margin-bottom: 14px;
+    margin-right: 10px;
+}
+
+.fab {
+    border-radius: 50%;
+    height: 39px;
+    width: 40px;
+    background: #45AE20;
+}
+
+#back {
+    background: #D24444;
+}
+
+ion-fab-button {
+    height: 70px;
+    width: 72px;
+}
+
+.cus-ion-buttons {
+    position: absolute;
+    right: 1px;
+    top: 6px;
+}
+
+.cart-icon {
+    font-size: 24px;
+}
+
+.category-card {
+    background: #1f2238;
+    border-radius: 10px;
+    -webkit-box-shadow: 1px 5px 14px 0px rgba(0, 1, 0, 0.8);
+    -moz-box-shadow: 1px 5px 14px 0px rgba(0, 1, 0, 0.8);
+    box-shadow: 1px 5px 14px 0px rgba(0, 1, 0, 0.8);
+}

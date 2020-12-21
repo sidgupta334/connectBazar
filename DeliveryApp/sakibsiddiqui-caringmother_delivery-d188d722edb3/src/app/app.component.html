@@ -1,0 +1,57 @@
+<ion-app>
+  <ion-split-pane contentId="main-content" >
+    <ion-menu contentId="main-content" type="overlay"> 
+    <!-- <ion-menu contentId="main-content" swipeEnabled="false" > -->
+      <ion-content >
+        <ion-list id="inbox-list" style="background-color: #0A0A14;">
+          <ion-list-header >Welcome {{this.user}}</ion-list-header>
+      
+          <ng-container *ngIf="show then login" ></ng-container>
+            <ng-container *ngIf="noAuthshow then skipLogin" ></ng-container>
+
+            <ng-template #login>
+              <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index" (click)="toggle(p.title)">
+                <ion-item (click)="selectedIndex = i" routerDirection="root"
+                 [routerLink]="[p.url]" lines="none" detail="false" [class.selected]="selectedIndex == i">
+                 <!-- <div *ngIf="selectedIndex == 4" >
+                   <p style="color: burlywood;">kjhlkjdshfkjdshf</p>
+                 </div> -->
+    
+    
+                  <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'" style="font-size: 26px;" 
+          ></ion-icon>
+                  <ion-label>{{ p.title }}</ion-label>
+                </ion-item>
+              </ion-menu-toggle>
+            </ng-template>
+
+      
+
+            <ng-template #skipLogin>
+              <ion-menu-toggle auto-hide="false" *ngFor="let p of appNoAuthPages; let i = index" (click)="toggle(p.title)">
+                <ion-item (click)="selectedIndex = i" routerDirection="root"
+                 [routerLink]="[p.url]" lines="none" detail="false" [class.selected]="selectedIndex == i">
+                 <!-- <div *ngIf="selectedIndex == 4" >
+                   <p style="color: burlywood;">kjhlkjdshfkjdshf</p>
+                 </div> -->
+    
+    
+                  <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'" style="font-size: 26px;" 
+          ></ion-icon>
+                  <ion-label>{{ p.title }}</ion-label>
+                </ion-item>
+              </ion-menu-toggle>
+
+            </ng-template>
+  
+
+
+    
+        </ion-list>
+
+      
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-split-pane>
+</ion-app>

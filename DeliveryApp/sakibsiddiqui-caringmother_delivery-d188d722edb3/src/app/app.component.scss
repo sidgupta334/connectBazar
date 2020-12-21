@@ -1,0 +1,169 @@
+ion-menu ion-content {
+  --background: var(--ion-item-background, var(--ion-background-color, #0A0A14));
+
+}
+
+ion-menu.md ion-content {
+  --padding-start: 8px;
+  --padding-end: 8px;
+  --padding-top: 20px;
+  --padding-bottom: 20px;
+}
+
+ion-menu.md ion-list {
+  padding: 20px 0;
+}
+
+ion-menu.md ion-note {
+  margin-bottom: 30px;
+  color: #fff;
+}
+
+ion-menu.md ion-list-header,
+ion-menu.md ion-note {
+  padding-left: 10px;
+}
+
+ion-menu.md ion-list#inbox-list {
+  border-bottom: 1px solid var(--ion-color-step-150, #d7d8da);
+}
+
+ion-menu.md ion-list#inbox-list ion-list-header {
+  font-size: 22px;
+  font-weight: 600;
+  min-height: 20px;
+}
+
+ion-menu.md ion-list#labels-list ion-list-header {
+  font-size: 16px;
+  margin-bottom: 18px;
+  color: #757575;
+  min-height: 26px;
+}
+
+ion-menu.md ion-item {
+  --padding-start: 10px;
+  --padding-end: 10px;
+  border-radius: 4px;
+}
+
+ion-menu.md ion-item.selected {
+  --background: yellow;
+}
+
+
+ion-menu.md ion-item ion-icon {
+  color: #C6C6C6;
+}
+
+ion-menu.md ion-item ion-label {
+color: #C6C6C6;
+  font-weight: bolder;
+  font-size: 18px;
+}
+
+ion-menu.ios ion-content {
+  --padding-bottom: 20px;
+}
+
+ion-menu.ios ion-list {
+  padding: 20px 0 0 0;
+}
+
+ion-menu.ios ion-note {
+  line-height: 24px;
+  margin-bottom: 20px;
+}
+
+ion-menu.ios ion-item {
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --min-height: 50px;
+}
+ion-menu.ios ion-list#labels-list ion-list-header {
+  margin-bottom: 8px;
+}
+
+ion-menu.ios ion-list-header,
+ion-menu.ios ion-note {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+ion-menu.ios ion-note {
+  margin-bottom: 8px;
+}
+
+ion-note {
+  display: inline-block;
+  font-size: 16px;
+
+  color: var(--ion-color-medium-shade);
+}
+
+
+
+
+@font-face {
+  font-family: 'DamionRegular';
+  src: url('../assets/fonts/Damion-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('../assets/fonts/Roboto-Light.ttf');
+}
+
+
+ion-menu.md ion-item.selected ion-icon {
+  color: white;
+}
+
+
+// css to chane the background color of menu
+ion-item.selected {
+  background-color: #24AFDB;
+
+}
+
+// css for the welcome header
+ion-list-header {
+  color: #C6C6C6;
+  text-align: center;
+  font-family: Roboto;
+  font-size: 28px;
+  margin-bottom: 30px;
+}
+// css for the icon without selected
+ion-menu.ios ion-item ion-icon {
+  color: #fff;
+}
+// css to change the color of icon which is active 
+ion-menu ion-item.selected ion-icon {
+  color: white;
+  font-family: Roboto;
+  font-weight: bolder;
+}
+ 
+// css for the label
+ion-menu.ios ion-item ion-label {
+  font-size: 18px; color: #fff;font-family: Roboto;font-style: normal;font-weight: bolder;
+}
+
+
+// css for the label
+ion-menu ion-item.selected ion-label {
+  font-size: 18px; color: white;font-family: Roboto;font-style: normal;font-weight: bolder;
+}
+
+@media only screen and (max-width: 360px){
+  // css for the welcome header
+ion-list-header {
+  color: #C6C6C6;
+  text-align: center;
+  font-family: Roboto;
+  font-size: 20px;
+  margin-bottom: 30px
+  
+}
+}

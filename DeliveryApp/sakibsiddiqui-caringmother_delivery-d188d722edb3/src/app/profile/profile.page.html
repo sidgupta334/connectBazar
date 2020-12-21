@@ -1,0 +1,180 @@
+<ion-header>
+  <ion-toolbar color="primary" style="height: 52px;">
+    <ion-buttons slot="start">
+      <ion-icon name="arrow-back" routerLink="/home"></ion-icon>
+    </ion-buttons>
+    <ion-title>Profile</ion-title>
+
+    <ion-buttons slot="end" tab="search">
+      <ion-button style="margin-left: -60px;" (click)="logout()">
+        <ion-icon name="power" style="font-size: 38px;"></ion-icon>
+      </ion-button>
+
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="appBackground">
+  <ng-container *ngIf="showProfile; then show"></ng-container>
+  <ng-container *ngIf="!showProfile; then editForm"></ng-container>
+  <ng-template #show>
+    <h1>View Your Profile</h1>
+    <ion-card style="margin-top: 25px;">
+      <div class="nameCol">
+        <p>{{this.letter}}</p>
+      </div>
+      <ion-list>
+        <ion-item>
+          <ion-label
+            style="color: #a4a4a4; font-size: 20px; font-family: Roboto;"
+            >Name:
+            <span style="font-weight: bolder;"
+              >{{this.user?.fullName}}</span
+            ></ion-label
+          >
+        </ion-item>
+        <ion-item>
+          <ion-label
+            style="color: #a4a4a4; font-size: 20px; font-family: Roboto;"
+            >DOB:
+            <span style="font-weight: bolder;"
+              >{{this.user?.dob}}</span
+            ></ion-label
+          >
+        </ion-item>
+        <ion-item>
+          <ion-label
+            style="color: #a4a4a4; font-size: 20px; font-family: Roboto;"
+            >Email Id:
+            <span style="font-weight: bolder;"
+              >{{this.user?.email}}</span
+            ></ion-label
+          >
+        </ion-item>
+        <ion-item>
+          <ion-label
+            style="color: #a4a4a4; font-size: 20px; font-family: Roboto;"
+            >Phone No:
+            <span style="font-weight: bolder;"
+              >{{this.user?.mobile}}</span
+            ></ion-label
+          >
+        </ion-item>
+        <ion-item>
+          <ion-label
+            style="color: #a4a4a4; font-size: 20px; font-family: Roboto;"
+            >Gender:
+            <span style="font-weight: bolder;"
+              >{{this.user?.gender}}</span
+            ></ion-label
+          >
+        </ion-item>
+      </ion-list>
+    </ion-card>
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button (click)="editProfile()">
+        <img
+          src="../../assets/edit.png"
+          style="color: white; font-weight: bold;"
+        />
+      </ion-fab-button>
+    </ion-fab>
+  </ng-template>
+
+
+
+  <ng-template #editForm>
+    <form [formGroup]="EditForm">
+      <h1>Edit Your Profile</h1>
+      <ion-card style="margin-top: 25px;">
+        <div class="nameCol">
+          <p>{{this.letter}}</p>
+        </div>
+        <ion-list>
+          <ion-row>
+            <ion-col class="ion-float-right">
+              <ion-item>
+                <ion-label position="fixed" style="color: #919090;">
+                  Name:</ion-label
+                >
+                <ion-input type="text" formControlName="name"> </ion-input>
+              </ion-item>
+              <div
+                id="errorStyle"
+                *ngIf="checkValid && f.name.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="f.name.errors.required">*Name is required</div>
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label position="fixed" style="color: #919090;">
+                  DOB:</ion-label
+                >
+                <ion-input type="text" formControlName="dob"> </ion-input>
+                <div
+                  id="errorStyle"
+                  *ngIf="checkValid && f.dob.errors"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="f.dob.errors.required" style="color: red;">
+                    *Dob is required
+                  </div>
+                </div>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label position="fixed" style="color: #919090;">
+                  Email Id:</ion-label
+                ><span style="font-weight: bolder; color: #fff;"> {{this.user?.email}}</span>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label position="fixed" style="color: #919090;">
+                  Phone No:</ion-label
+                ><span style="font-weight: bolder; color: #fff;">{{this.user?.mobile}}</span>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label position="fixed" style="color: #919090;">
+                  Gender:</ion-label
+                >
+                <ion-input type="text" formControlName="gender"> </ion-input>
+                <div
+                  id="errorStyle"
+                  *ngIf="checkValid && f.gender.errors"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="f.gender.errors.required" style="color: red;">
+                    *gender is required
+                  </div>
+                </div>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-list>
+      </ion-card>
+    </form>
+  </ng-template>
+</ion-content>
+<div *ngIf="!showProfile">
+  <button class="updateButton" type="ngSubmit" (click)="updateAddress(EditForm.value)">Update Profile</button>
+
+</div>

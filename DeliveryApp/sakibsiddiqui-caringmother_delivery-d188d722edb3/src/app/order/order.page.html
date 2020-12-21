@@ -1,0 +1,93 @@
+<ion-header>
+  <ion-toolbar color="primary" style="height: 52px;">
+    <ion-buttons slot="start">
+      <ion-icon name="arrow-back" routerLink="/home" style="margin-top: -10px;"></ion-icon>
+    </ion-buttons>
+    <ion-title>Order</ion-title>
+
+    <ion-buttons slot="end" tab="search">
+      <ion-button style="margin-left:0px;margin-top: 1px;" (click)="navigate()">
+        <ion-icon name="navigate" style="font-size: 34px;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="appBackground">
+  <ion-grid>
+    <ion-row class="order-row">
+      <ion-col class="order-col">Order ID: <span style="font-weight: bold;">{{viewOrder?.orderId}}</span></ion-col>
+    </ion-row>
+
+    <ion-row class="order-title">
+      <ion-col size="6">Order Date</ion-col>
+      <ion-col size="6" id="order-value">{{viewOrder?.orderDate}}</ion-col>
+      <ion-col size="6">Order Status</ion-col>
+      <ion-col size="6" id="order-value" style="color: #1FCA1C;">{{viewOrder?.orderStatus}}</ion-col>
+      <ion-col size="6">Item Count</ion-col>
+      <ion-col size="6" id="order-value">{{viewOrder?.netQuantity}}</ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-row class="order-item">
+    <ion-col class="order-col">ORDER ITEMS :</ion-col>
+  </ion-row>
+
+  <ion-card  *ngFor='let item of viewOrder?.products'>
+    <ion-row style="border-bottom: 1px solid aquamarine;">
+      <ion-col size="3">
+        <img [src]= "item.url" alt="caringMother"/>
+      </ion-col>
+
+      <ion-col size="7">
+        <p>{{item.productName}} <span>({{item.brand}}) </span> 
+        </p>
+
+        <div style="margin-top: 25px;">
+          <p><span><del>₹{{item.oldPrice}}</del></span> <span style="margin-left: 15px;"> ₹ {{item.newPrice}} × {{item.quantity}} </span>
+          </p>
+        </div>
+      </ion-col>
+
+      <ion-col> <p style="text-align: end;padding-right: 10px;">₹ {{item.total}}</p>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+</ion-content>
+<div style="background-color: rgb(6, 15, 66);">
+
+  <ion-row class="order-total" id="text-color">
+
+    <ng-container *ngIf="viewOrder?.orderStatus === 'DELIVERED'">
+      <ion-col size="6">Status</ion-col>
+      <ion-col size="6" id="order-value" style="color: #1FCA1C;">{{viewOrder?.orderStatus}}</ion-col>
+    </ng-container>
+
+    <ng-container *ngIf="viewOrder?.orderStatus === 'CANCELLED'">
+      <ion-col size="6">Status</ion-col>
+      <ion-col size="6" id="order-value" style="color: red;">{{viewOrder?.orderStatus}}</ion-col>
+    </ng-container>
+    <ng-container *ngIf="viewOrder?.orderStatus === 'COMPLETED'">
+      <ion-col size="6">Status</ion-col>
+      <ion-col size="6" id="order-value" style="color: #1FCA1C;">{{viewOrder?.orderStatus}}</ion-col>
+    </ng-container>
+  
+
+    <ion-col size="6">Net Amount</ion-col>
+    <ion-col size="6" id="order-value">₹ {{viewOrder?.oldTotal}}</ion-col>
+    <ion-col size="6">Discount Applied</ion-col>
+    <ion-col size="6" id="order-value" style="color: #1FCA1C;">₹ {{viewOrder?.totalDiscount}}</ion-col>
+    <ion-col size="6">Final Amount</ion-col>
+    <ion-col size="6" id="order-value">₹ {{viewOrder?.totalAmount}}</ion-col>
+ 
+  </ion-row> 
+
+  <ng-container *ngIf="viewOrder?.orderStatus === 'ORDERED'">
+    <button class="button"> Cancel Order</button>
+  </ng-container>
+
+  <ng-container *ngIf="viewOrder?.orderStatus === 'CONFIRMED'">
+    <button class="button" (click)="orderDelivered(viewOrder)"> Mark Deliver</button>
+  </ng-container>
+  
+</div>
