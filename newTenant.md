@@ -71,6 +71,6 @@ SERVER SIDE:
 						  "pincode": "string",
 						  "state": "string",
 						  "userType": "admin"
-						}
+					}
 
 

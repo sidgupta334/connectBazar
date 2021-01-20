@@ -6,9 +6,12 @@
 ***docker pull postgres
 
 - Create docker container for postgres DB
-**docker run -d --name grocerica-db -e POSTGRES_PASSWORD=testpwd -v  /home/ec2-user/db_data:/var/lib/postgresql/data -p 5432:5432 postgres:11
+**docker run -d --name grocerica-db -e POSTGRES_PASSWORD=grocerica789! -v  /home/ubuntu/bazar-db:/var/lib/postgresql/data -p 5433:5432 postgres
+
+**docker run -d --name treggo-db -e POSTGRES_PASSWORD=treggo789! -v  /home/ubuntu/treggo-db:/var/lib/postgresql/data -p 5432:5432 postgres
 
 - To run some predefined db queries run it like:
+**docker exec -it treggo-db psql -U postgres (enters in postgres mode)
 **docker exec -it grocerica-db  psql -U postgres -c "SELECT * FROM test;"
 
 - Copy JAR and Dockerfile into Server	
