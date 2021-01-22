@@ -52,6 +52,10 @@ export class CommomService {
     return await modal.present();
    }
 
+  async closeModal() {
+    
+  }
+
    scheduleNotification(value) {
     console.log(value);
     console.log(value[0].finalTotal);

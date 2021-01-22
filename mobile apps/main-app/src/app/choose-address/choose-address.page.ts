@@ -204,8 +204,7 @@ export class ChooseAddressPage implements OnInit {
       const mes = 'Order Successfully Placed';
       this.common.presentToast(mes);
       this.common.scheduleNotification(res);
-      localStorage.setItem('grocericaQuantity', '0');
-
+     
       this.router.navigate(['/order-placed',res[0].orderId]);
     },
       error => {

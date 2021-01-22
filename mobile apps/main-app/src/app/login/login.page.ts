@@ -26,7 +26,6 @@ export class LoginPage implements OnInit {
   signupText: boolean = true;
 
   constructor(
-
     private fb: FormBuilder,
     private http: HttpClient,
     private api: LoginService,
@@ -36,7 +35,6 @@ export class LoginPage implements OnInit {
     private googlePlus: GooglePlus,
     private loadingController: LoadingController,
     private menu: MenuController
- 
   ) {}
 
   ngOnInit() {
@@ -46,9 +44,28 @@ export class LoginPage implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
     });
+
+    this.removeAllStorageItems();
   }
 
-  
+  removeAllStorageItems() {
+    localStorage.removeItem('grocericatoken');
+    localStorage.removeItem('userDetail');
+    localStorage.removeItem('user');
+    localStorage.removeItem('userIdSignUp');
+    localStorage.removeItem('grocericastart');
+    localStorage.removeItem('grocericaQuantity');
+    localStorage.removeItem('grocericaSelectedAddress');
+    localStorage.removeItem('grocericaforgotEmail');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('grocericaProduct');
+    localStorage.removeItem('reviewProduct');
+    localStorage.removeItem('viewFeedback');
+    localStorage.removeItem('grocericaOrderId');
+    localStorage.removeItem('grocericaViewCart');
+    localStorage.removeItem('grocericaemail');
+    localStorage.removeItem('userIdSignUp');
+  }
 
   // getter method to access form fields
   get f() {
@@ -68,11 +85,11 @@ export class LoginPage implements OnInit {
     const p = this.api.login(value);
 
     const loading = await this.loadingController.create({
-      message: 'Please wait...'
+      message: 'Please wait...',
     });
     loading.present();
     p.subscribe(
-      async (res) => {
+      async res => {
         console.log(res);
         await loading.dismiss();
 
@@ -81,37 +98,36 @@ export class LoginPage implements OnInit {
         localStorage.setItem('grocericaemail', res.email);
         localStorage.setItem('user', res.fullName);
         localStorage.setItem('userDetail', JSON.stringify(res));
-     //  window.location.reload();
+        //  window.location.reload();
         this.router.navigate(['/home']);
       },
 
-      async (error) => {
+      async error => {
         await loading.dismiss();
         // in case when user did not subscribe to activate account adjustResize
         if (error.error.message === 'PENDING') {
           const loading = await this.loadingController.create({
-            message: 'Please wait...'
+            message: 'Please wait...',
           });
           loading.present();
           const p = this.api.activateAccount(error.error.userId);
 
           p.subscribe(
-            async (res) => {
+            async res => {
               console.log(res);
               await loading.dismiss();
               this.router.navigate(['/activate-otp']);
             },
-            (error) => {
+            error => {
               console.log(error);
             }
           );
         }
 
         if (error.status === 400) {
-        const mes = 'Invalid Details';
-        this.alert.presentToast(mes);
-
-      }
+          const mes = 'Invalid Details';
+          this.alert.presentToast(mes);
+        }
       }
     );
   }
@@ -119,12 +135,13 @@ export class LoginPage implements OnInit {
   async googleSignIn() {
     console.log('hellloooo');
     const loading = await this.loadingController.create({
-      message: 'Please wait...'
+      message: 'Please wait...',
     });
     loading.present();
-    this.googlePlus.login({})
+    this.googlePlus
+      .login({})
       .then(result => {
-        console.log(result) ;
+        console.log(result);
         loading.dismiss();
 
         localStorage.setItem('grocericatoken', result.accessToken);
@@ -134,20 +151,17 @@ export class LoginPage implements OnInit {
         this.router.navigate(['/home']);
         this.userData = result;
       })
-        
-      .catch(err => 
-        {
-          this.userData = `Error ${JSON.stringify(err)}`
-          const mes = 'Something went wrong';
-          this.alert.presentToast(mes);
-          
-        });
+
+      .catch(err => {
+        this.userData = `Error ${JSON.stringify(err)}`;
+        const mes = 'Something went wrong';
+        this.alert.presentToast(mes);
+      });
   }
 
   ionViewWillEnter() {
-    if(localStorage.getItem('grocericatoken') || localStorage.getItem('userIdSignUp')) {
+    if (localStorage.getItem('grocericatoken')) {
       this.signupText = false;
-    }  
+    }
   }
-
 }

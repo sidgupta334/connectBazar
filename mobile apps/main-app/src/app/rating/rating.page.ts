@@ -56,7 +56,6 @@ p.subscribe(async res => {
   console.log(res);
   await loading.dismiss();
   const mes = 'Your response have been submitted';
-  localStorage.setItem('grocericaQuantity', '0');
   this.common.presentToast(mes);
   setTimeout(() => {
       this.router.navigate(['/all-order']);

@@ -25,13 +25,13 @@
     <div *ngIf="hideProduct">
         <ion-card class="ion-card-category" style="height: 220px;" *ngFor="let items of productList; let  i =index ">
             <ion-row>
-                <ion-col size="4">
+                <ion-col size="4" (click)="particularProduct(items)">
                     <img class="cart-image" [src]="items.url" alt="caring mother" />
                 </ion-col>
 
                 <ion-col class="cate-ion-col">
                     <div class="cate-parent">
-                        <div class="rupee-status">
+                        <div class="rupee-status" (click)="particularProduct(items)">
                             <p class="class-ruppee">
                                 ₹{{items.newPrice}}
                                 <span> <del class="class-del">₹{{items.oldPrice}}</del> </span>
@@ -43,7 +43,7 @@
                             </p>
                         </div>
 
-                        <div class="branddiv" style="margin: 20px 0;">
+                        <div class="branddiv" (click)="particularProduct(items)" style="margin: 20px 0;">
                             <p class="class-product">
                                 {{items.productName}}<span class="class-brand">
                   - ({{items.brand}})

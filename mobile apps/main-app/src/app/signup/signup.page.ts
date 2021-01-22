@@ -79,10 +79,10 @@ export class SignupPage implements OnInit {
 
         }
         await loading.dismiss();
-        if (error.status === 500 && error.error.message === 'Email already exists') {
-          this.alert.presentToast('Email already exists');
-
-        }
+        if (error.status === 500) {
+          console.log("ERR ", error.error.message);
+          this.alert.presentToast(error.error.message);
+        } 
     });
   }
 

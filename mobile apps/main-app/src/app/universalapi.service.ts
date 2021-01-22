@@ -7,7 +7,8 @@ import { map, delay } from 'rxjs/operators';
 export class UniversalapiService {
 
 
-  static url = 'http://13.234.174.149:8080';
+  // static url = 'https://connect-it-api.herokuapp.com';
+  static url = 'http://localhost:8080';
 
   constructor(private http: HttpClient) { }
 

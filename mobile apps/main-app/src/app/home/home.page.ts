@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { AlertController, ModalController, LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -21,7 +21,7 @@ import { AppComponent } from '../app.component';
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, OnChanges {
   bannerImage: any; // store banner object
   categoryDescription: any; // store category information
 // Optional parameters to pass to the swiper instance
@@ -65,7 +65,8 @@ slideOptions = {
 
   }
 
-
+  ngOnChanges() {
+  }
 
   openModal(){
     this.commom.openModal();

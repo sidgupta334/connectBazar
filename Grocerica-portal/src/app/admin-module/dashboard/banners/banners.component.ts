@@ -173,5 +173,6 @@ export class BannersComponent implements OnInit {
         this.fileError = true;
       }
     }
+    event.target.value = "";
   };
 }

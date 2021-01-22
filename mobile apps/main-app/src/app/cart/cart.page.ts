@@ -29,10 +29,10 @@ export class CartPage implements OnInit {
   couponButtonApplied: boolean;
   token: string;
   p: Promise<void>;
+  hasGotResponse: boolean = false;
 
   cartId: number;
   userId: any;
-
 
   constructor(
     private homePageApi: UniversalapiService,
@@ -45,55 +45,89 @@ export class CartPage implements OnInit {
   ) {}
 
   ngOnInit() {
-
-    this.viewCart();
-
-    this.Promo = this.formbuilder.group({
+      this.Promo = this.formbuilder.group({
       couponName: ['', Validators.required],
     });
   }
-
 
   openModel() {
     this.common.openModal();
   }
 
-  viewCart() {
+  async viewCart(resp: any = null) {
     // method to get the list of product in a cart
-    const p = this.api.viewCart();
-    this.showCart = true;
-    p.subscribe(
-      (res) => {
-        console.log('CART VALUE',res);
-        this.cartId = res.cartId; 
-        this.quantity = res.netQuantity;
+    if (!resp) {
+      const loading = await this.loadingController.create({
+        message: 'Please wait...',
+      });
+      loading.present();
 
-        for (let i = 0 ; i < res.products.length ; i++) {
-          // tslint:disable-next-line: max-line-length
-          res.products[i].discountPercentage = Math.round(((res.products[i].oldPrice - res.products[i].newPrice) / res.products[i].oldPrice) * 100);
-          console.log( res.products[i].discountPercentage);
-        }
-        this.cart = res.products;
-        this.total = res.netTotal;
-        this.couponApplied = false;
-        this.couponButtonApplied = false;
-        this.couponButton = true;
-        this.withoutCoupon = true;
+      const p = this.api.viewCart();
+      p.subscribe(
+        async res => {
+          this.hasGotResponse = true;
+          await loading.dismiss();
+          console.log('CART VALUE', res);
+          this.cartId = res.cartId;
+          this.quantity = res.netQuantity;
 
-        if ( this.quantity == 0){
-          this.showMsg = true;
-          this.showCart = false;
+          for (let i = 0; i < res.products.length; i++) {
+            // tslint:disable-next-line: max-line-length
+            res.products[i].discountPercentage = Math.round(
+              ((res.products[i].oldPrice - res.products[i].newPrice) /
+                res.products[i].oldPrice) *
+                100
+            );
+            console.log(res.products[i].discountPercentage);
+          }
+          this.cart = res.products;
+          this.total = res.netTotal;
+          this.couponApplied = false;
+          this.couponButtonApplied = false;
+          this.couponButton = true;
+          this.withoutCoupon = true;
+
+          if (this.quantity == 0) {
+            this.showMsg = true;
+            this.showCart = false;
+          }
+        },
+        async error => {
+          await loading.dismiss();
+          if (error.status == 500) {
+            this.showMsg = true;
+            this.showCart = false;
+            // tslint:disable-next-line: align
+          }
+          console.log(error);
         }
-      },
-      (error) => {
-        if (error.status == 500) {
-          this.showMsg = true;
-          this.showCart = false;
-        // tslint:disable-next-line: align
-        }
-        console.log(error);
+      );
+    } else {
+      this.cartId = resp.cartId;
+      this.quantity = resp.netQuantity;
+
+      for (let i = 0; i < resp.products.length; i++) {
+        // tslint:disable-next-line: max-line-length
+        resp.products[i].discountPercentage = Math.round(
+          ((resp.products[i].oldPrice - resp.products[i].newPrice) /
+            resp.products[i].oldPrice) *
+            100
+        );
+        console.log(resp.products[i].discountPercentage);
       }
-    );
+      this.cart = resp.products;
+      this.total = resp.netTotal;
+      this.couponApplied = false;
+      this.couponButtonApplied = false;
+      this.couponButton = true;
+      this.withoutCoupon = true;
+
+      if (this.quantity == 0) {
+        this.showMsg = true;
+        this.showCart = false;
+      }
+    }
+    this.showCart = true;
   }
 
   // method to apply promo code
@@ -109,83 +143,89 @@ export class CartPage implements OnInit {
       return;
     }
     const loading = await this.loadingController.create({
-      message: 'Please wait...'
+      message: 'Please wait...',
     });
     loading.present();
 
     const p = this.api.applyPromoCade(value);
 
-    p.subscribe(async res => {
-      console.log(res);
-      this.oldPrice = res.oldPrice;
-      this.updatedPrice = res.updatedPrice;
-      localStorage.setItem('updatedprice',this.updatedPrice);
-      this.couponApplied = true;
-      this.couponButtonApplied = true;
-      this.withoutCoupon = false;
-      this.couponButton = false;
-      localStorage.setItem('couponCode', value.couponName);
-      await loading.dismiss();
-    },
-    async error => {
-      console.log(error);
-      if (error.status == 500) {
-        const mes = 'INVALID COUPON';
-        this.alert.presentToast(mes);
+    p.subscribe(
+      async res => {
+        console.log(res);
+        this.oldPrice = res.oldPrice;
+        this.updatedPrice = res.updatedPrice;
+        localStorage.setItem('updatedprice', this.updatedPrice);
+        this.couponApplied = true;
+        this.couponButtonApplied = true;
+        this.withoutCoupon = false;
+        this.couponButton = false;
+        localStorage.setItem('couponCode', value.couponName);
         await loading.dismiss();
+      },
+      async error => {
+        console.log(error);
+        if (error.status == 500) {
+          const mes = 'INVALID COUPON';
+          this.alert.presentToast(mes);
+          await loading.dismiss();
+        }
       }
-    });
+    );
   }
 
   // method to add product to cart
-  addToCart(items) {
+  async addToCart(items) {
+    const loading = await this.loadingController.create({
+      message: 'Please wait...',
+    });
+    loading.present();
+
     const p = this.api.addToCart(items.productId);
-    p.subscribe( res => {
+    p.subscribe(async res => {
+      await loading.dismiss();
       console.log(res);
-      this.viewCart();
+      this.viewCart(res);
     });
   }
-
 
   // method to remove product from cart
-  removeFromCart(items) {
+  async removeFromCart(items) {
+    const loading = await this.loadingController.create({
+      message: 'Please wait...',
+    });
+    loading.present();
     const p = this.api.removeFromCart(items.productId);
-    p.subscribe( res => {
+    p.subscribe(async res => {
+      await loading.dismiss();
       console.log(res);
-      this.viewCart();
-  });
-}
+      this.viewCart(res);
+    });
+  }
 
   async ionViewWillEnter() {
+    console.log('I am In');
+    this.viewCart();
+    console.log(this.quantity);
+    this.token = localStorage.getItem('grocericatoken');
+    console.log(this.token);
 
-  console.log('I am In');
-  this.viewCart();
-  console.log(this.quantity);
-  this.token = localStorage.getItem('grocericatoken');
-  console.log(this.token);
-
-
-  if (this.quantity == 0 && this.token == null) {
-
-    const alert = await this.common.presentAlertConfirm('Login to add product in cart');
-    alert.present();
-    alert.onDidDismiss().then(data => {
-      console.log(data);
-      if(data.data === true){
-        this.router.navigate(['/login']);
-      }
-      if(data.role === "backdrop"){
-
-        this.common.presentToast('Login to add product in cart');
-        setTimeout(() => {
+    if (this.quantity == 0 && this.token == null) {
+      const alert = await this.common.presentAlertConfirm(
+        'Login to add product in cart'
+      );
+      alert.present();
+      alert.onDidDismiss().then(data => {
+        console.log(data);
+        if (data.data === true) {
           this.router.navigate(['/login']);
-        }, 3033);
-       
-      }
-    });
-
-
+        }
+        if (data.role === 'backdrop') {
+          this.common.presentToast('Login to add product in cart');
+          setTimeout(() => {
+            this.router.navigate(['/login']);
+          }, 3033);
+        }
+      });
+    }
   }
-}
-
 }

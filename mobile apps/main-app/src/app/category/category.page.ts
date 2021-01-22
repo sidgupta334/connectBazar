@@ -24,107 +24,123 @@ export class CategoryPage implements OnInit {
   view: any;
   removeCart: any;
 
-  show: boolean ;
+  show: boolean;
   noAuth: string;
 
-
-
-
-  constructor(private homePageApi: UniversalapiService ,
-              private api: CartService,
-              private router: Router,
-              private loadingController: LoadingController,
-              private home: HomePage,
-              private common: CommomService) { }
+  constructor(
+    private homePageApi: UniversalapiService,
+    private api: CartService,
+    private router: Router,
+    private loadingController: LoadingController,
+    private home: HomePage,
+    private common: CommomService
+  ) {}
 
   ngOnInit() {
     this.noAuth = localStorage.getItem('grocericatoken');
-    let p = this.api.viewCart();p.subscribe(res =>{console.log('responnnse',res);this.quantity=res.netQuantity});
-
-
 
     // ======Check Login Condition ======== //
-    if (this.noAuth === null ) {
-  console.log('I am nullllll');
-  this.show = false;
-  console.log(this.quantity);
-  }
-    if (typeof(this.noAuth) === 'undefined' ) {
-    console.log('I am undefined');
-    this.show = false;
-
-  }
+    if (this.noAuth === null) {
+      this.show = false;
+      console.log(this.quantity);
+    }
+    if (typeof this.noAuth === 'undefined') {
+      this.show = false;
+    }
     if (this.noAuth) {
-    this.show = true;
-    console.log('i just logged in');
-  }
-  // ---End----//
+      this.show = true;
+    }
+    // ---End----//
 
     this.viewCart();
-    const category = localStorage.getItem('grocericaCategory');
     this.quantity = localStorage.getItem('grocericaQuantity');
     console.log('quantity' + this.quantity);
-    this.getProducts(category);
   }
 
-  openModel() { // open model for search
-this.common.openModal();
+  openModel() {
+    // open model for search
+    this.common.openModal();
   }
 
+  updateCart(updateType) {
+    this.quantity =
+      updateType === '+'
+        ? Number(this.quantity) + 1
+        : Number(this.quantity) - 1;
+    
+    localStorage.setItem('cartCount', this.quantity);
+  }
 
-  viewCart() {// method to get cart value
+  async viewCart() {
+    // method to get cart value
+    const loading = await this.loadingController.create({
+      message: 'Please wait...',
+    });
+    loading.present();
     const a = this.api.viewCart();
-    a.subscribe(res => {this.view = res;
-                        localStorage.setItem('grocericaQuantity', res.netQuantity);
-                        this.quantity = localStorage.getItem('grocericaQuantity');
-                        console.log('cart values', this.view);
-                        console.log('cart product length' + this.view.products.length); 
-                      },
-                      error => {
-
-                        if(error.status === 500) {
-                          console.log('I am here ')
-                          localStorage.setItem('grocericaQuantity', '0');
-                        }
-                      });
+    a.subscribe(
+      async res => {
+        await loading.dismiss();
+        this.quantity = res.netQuantity;
+        this.view = res;
+        localStorage.setItem('grocericaQuantity', res.netQuantity);
+        this.quantity = localStorage.getItem('grocericaQuantity');
+        console.log('cart values', this.view);
+        const category = localStorage.getItem('grocericaCategory');
+        this.getProducts(category);
+      },
+      async error => {
+        await loading.dismiss();
+        if (error.status === 500) {
+          console.log('I am here ');
+        }
+      }
+    );
   }
 
-
-
-  async getProducts(id) { // method to get the list of product in a sppecific category
+  async getProducts(id) {
+    // method to get the list of product in a sppecific category
 
     const loading = await this.loadingController.create({
-      message: 'Please wait...'
+      message: 'Please wait...',
     });
     loading.present();
 
     const p = this.homePageApi.getProducts(id);
-    p.subscribe(async res => {
-      await loading.dismiss();
-      this.category = res[0].categoryName;
-      console.log('productList', res);
-      console.log('product list length' + res.length );
-      for (let i = 0 ; i < res.length ; i++) {
-      res[i].discountPercentage = Math.round(((res[i].oldPrice - res[i].newPrice) / res[i].oldPrice) * 100) ; // add discount price
-      this.productList = res; // store product in productList
-      }
+    p.subscribe(
+      async res => {
+        await loading.dismiss();
+        this.category = res[0].categoryName;
+        console.log('productList', res);
+        console.log('product list length' + res.length);
+        for (let i = 0; i < res.length; i++) {
+          res[i].discountPercentage = Math.round(
+            ((res[i].oldPrice - res[i].newPrice) / res[i].oldPrice) * 100
+          ); // add discount price
+          this.productList = res; // store product in productList
+        }
 
-      for (let i = 0 ; i < res.length ; i++) {
-        this.productList[i].visible = true ; // adding attribute to make Add to cart visible
+        for (let i = 0; i < res.length; i++) {
+          this.productList[i].visible = true; // adding attribute to make Add to cart visible
 
-        for (let j = 0 ; j < this.view.products.length; j++) {
+          if (this.view && this.view?.products) {
+            for (let j = 0; j < this.view.products.length; j++) {
               // check condition is productID present in both product list and cart
-            if (this.productList[i].productId === this.view.products[j].productId) {
+              if (
+                this.productList[i].productId ===
+                this.view.products[j].productId
+              ) {
                 console.log('true');
                 this.productList[i].visible = false; // make increment and decrement visible
                 this.productList[i].quantity = this.view.products[j].quantity;
                 console.log(this.productList);
+              }
             }
+          }
+          console.log(this.productList);
         }
-        console.log(this.productList);
-
-      } },
-      async (error) => {
+      },
+      async error => {
         if (error.status === 401) {
           this.router.navigate(['/login']);
           await loading.dismiss();
@@ -136,88 +152,108 @@ this.common.openModal();
         }
         console.log(error);
         await loading.dismiss();
-
-    });
+      }
+    );
   }
 
-
-
-  addToCart(product , index){ // method to add the product to the cart
+  async addToCart(product, index) {
+    // method to add the product to the cart
+    const loading = await this.loadingController.create({
+      message: 'Please wait...',
+    });
+    loading.present();
     const p = this.api.addToCart(product.productId);
-    p.subscribe(res => {
-      console.log(res);
-      // tslint:disable-next-line: prefer-for-of
-      for (let i = 0; i < res.products.length; i++) {
-        console.log('cart list id', res.products[i].productId);
+    p.subscribe(
+      async res => {
+        console.log(res);
+        await loading.dismiss();
         // tslint:disable-next-line: prefer-for-of
-        for ( let j = 0 ; j < this.productList.length; j++ ) {
-            if (res.products[i].productId == this.productList[j].productId ) {
-              console.log('same id' , res.products[i].productId);
+        for (let i = 0; i < res.products.length; i++) {
+          console.log('cart list id', res.products[i].productId);
+          // tslint:disable-next-line: prefer-for-of
+          for (let j = 0; j < this.productList.length; j++) {
+            if (res.products[i].productId == this.productList[j].productId) {
+              console.log('same id', res.products[i].productId);
               this.productList[j].visible = false;
               this.productList[j].quantity = res.products[i].quantity;
-              this.viewCart();
             }
           }
+        }
+        console.log(this.productList);
+        this.updateCart('+');
+      },
+      async error => {
+        await loading.dismiss();
+        console.log(error);
+        this.common.presentToast('Unable to add product');
+        if (error.status == 500) {
+          console.log('helll');
+        }
       }
-      console.log(this.productList);
-
-    },
-    (error) => {
-      console.log(error);
-      if (error.status == 500) {
-        console.log('helll');
-        this.ngOnInit();
-      }
-    });
+    );
   }
 
-
-
-    // method to remove product from cart
-    removeFromCart(items, index) {
-      console.log('items ', items);
-      const p = this.api.removeFromCart(items.productId);
-      p.subscribe( res => {
-         console.log('cart response ', res);
+  // method to remove product from cart
+  async removeFromCart(items, index) {
+    const loading = await this.loadingController.create({
+      message: 'Please wait...',
+    });
+    loading.present();
+    console.log('items ', items);
+    const p = this.api.removeFromCart(items.productId);
+    p.subscribe(
+      async res => {
+        await loading.dismiss();
+        console.log('cart response ', res);
         // console.log('productList' , this.productList);
-         this.removeCart = res; // store cart value
-         if (this.removeCart.netQuantity != 0){ // check whether cart had value
+        this.removeCart = res; // store cart value
+        if (this.removeCart.netQuantity != 0) {
+          // check whether cart had value
 
-          for (let i = 0 ; i < this.removeCart.products.length; i ++) {
-            console.log('remove cart length ' + this.removeCart.products.length);
-           for (let j = 0 ; j < this.productList.length; j++) {
-            console.log('product list length ' + this.productList.length);
+          for (let i = 0; i < this.removeCart.products.length; i++) {
+            console.log(
+              'remove cart length ' + this.removeCart.products.length
+            );
+            for (let j = 0; j < this.productList.length; j++) {
+              console.log('product list length ' + this.productList.length);
               // tslint:disable-next-line: align
-              if (this.removeCart.products[i].productId === this.productList[j].productId) {
-                this.productList[j].quantity = this.removeCart.products[i].quantity;
+              if (
+                this.removeCart.products[i].productId ===
+                this.productList[j].productId
+              ) {
+                this.productList[j].quantity = this.removeCart.products[
+                  i
+                ].quantity;
                 console.log(this.productList);
-                this.viewCart();
               }
-            // tslint:disable-next-line: max-line-length
-            if (this.removeCart.products.some(pro => pro.productId === this.productList[j].productId)){
-              console.log('Object found inside the array.');
-            } else{
-              console.log('Not found ', this.productList[j].productId);
-              this.productList[j].visible = true;
-              this.viewCart();
-            }
-
+              // tslint:disable-next-line: max-line-length
+              if (
+                this.removeCart.products.some(
+                  pro => pro.productId === this.productList[j].productId
+                )
+              ) {
+                console.log('Object found inside the array.');
+              } else {
+                console.log('Not found ', this.productList[j].productId);
+                this.productList[j].visible = true;
+              }
             }
           }
         }
-         if ( this.removeCart.netQuantity === 0) { // condition when cart gets empty
+        if (this.removeCart.netQuantity === 0) {
+          // condition when cart gets empty
           console.log('empty');
-          this.viewCart();
-          this.ngOnInit();
+          this.quantity = 0;
         }
-
-
-
-        }, error => {
-          console.log(error);
-        });
+        this.updateCart('-');
+      },
+      async error => {
+        await loading.dismiss();
+        console.log(error);
+        this.common.presentToast('Unable to remove product');
       }
-
+    );
+  }
 
   particularProduct(product) {
     localStorage.setItem('grocericaProduct', JSON.stringify(product));
@@ -231,10 +267,5 @@ this.common.openModal();
     setTimeout(() => {
       this.router.navigate(['/login']);
     }, 3033);
-
   }
-
-
-  }
-
-
+}

@@ -173,6 +173,19 @@ export class AppComponent implements OnInit {
               localStorage.removeItem('userDetail');
               localStorage.removeItem('user');
               localStorage.removeItem('userIdSignUp');
+              localStorage.removeItem('grocericastart');
+              localStorage.removeItem('grocericaQuantity');
+              localStorage.removeItem('grocericaSelectedAddress');
+              localStorage.removeItem('grocericaforgotEmail');
+              localStorage.removeItem('userId');
+              localStorage.removeItem('grocericaProduct');
+              localStorage.removeItem('reviewProduct');
+              localStorage.removeItem('viewFeedback');
+              localStorage.removeItem('grocericaOrderId');
+              localStorage.removeItem('grocericaViewCart');
+              localStorage.removeItem('grocericaemail');
+              localStorage.removeItem('userIdSignUp');
+              
               this.router.navigate(['/login']);
               this.ngOnInit();
             });
