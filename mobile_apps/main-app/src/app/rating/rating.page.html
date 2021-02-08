@@ -1,0 +1,61 @@
+<ion-header>
+    <ion-toolbar color="primary" style="height: 60px;">
+        <ion-buttons slot="start">
+            <ion-icon name="arrow-back" routerLink="/view-order"></ion-icon>
+        </ion-buttons>
+        <ion-title>Your Feedback</ion-title>
+
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="appBackground">
+
+    <!-- form to submit the feedback -->
+    <form [formGroup]="ratingForm" (ngSubmit)="ratingFormValue(ratingForm.value)">
+        <ion-grid>
+            <ion-row class="order-row">
+                <ion-col class="order-col">Order ID: <span style="font-weight: bold;">{{productDetails?.orderId}}</span></ion-col>
+            </ion-row>
+
+            <ion-row class="order-title">
+                <ion-col size="6">Order Date</ion-col>
+                <ion-col size="6" id="order-value">{{productDetails?.orderDate}}</ion-col>
+                <ion-col size="6">Delivery Date</ion-col>
+                <ion-col size="6" id="order-value">{{productDetails?.deliveryDate}}</ion-col>
+                <ion-col size="6">Item Count</ion-col>
+                <ion-col size="6" id="order-value">{{productDetails?.netQuantity}}</ion-col>
+                <ion-col size="6">Order Value</ion-col>
+                <ion-col size="6" id="order-value" style="color: #1FCA1C;">{{productDetails?.finalTotal}}</ion-col>
+            </ion-row>
+        </ion-grid>
+
+        <ion-grid>
+            <h1 class="prodDesc" style="font-size: 24px;">Rate Your Experience</h1>
+
+            <ion-row style="margin-top: 20px;">
+
+                <ion-col size="6" class="prodDesc">
+                    <p id="prodText">Delivery Standard</p>
+                </ion-col>
+                <ion-col size="6">
+                    <ionic5-star-rating #rating formControlName="deliveryFeedback" activeIcon="star" defaultIcon="star-outline" activeColor="#6B00C2" defaultColor="#f4f4f4" readonly="false" rating="0" fontSize="32px" (ratingChanged)="logDeliveryChange($event)">
+                    </ionic5-star-rating>
+                </ion-col>
+
+                <ion-col size="6" class="prodDesc">
+                    <p id="prodText">Order Quality</p>
+                </ion-col>
+                <ion-col size="6">
+                    <ionic5-star-rating #rating1 formControlName="itemsFeedback" activeIcon="star" defaultIcon="star-outline" activeColor="#6B00C2" defaultColor="#f4f4f4" readonly="false" rating="0" fontSize="32px" (ratingChanged)="logOrderChange($event)">
+                    </ionic5-star-rating>
+                </ion-col>
+                <ion-textarea class="feedback" rows="4" cols="20" placeholder="Enter your feedback..." formControlName="feedback"></ion-textarea>
+            </ion-row>
+
+        </ion-grid>
+
+        <div style="text-align: center;">
+            <ion-button class="button" type="ngSubmit">SUBMIT</ion-button>
+        </div>
+
+    </form>

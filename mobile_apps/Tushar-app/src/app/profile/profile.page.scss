@@ -1,0 +1,59 @@
+h1 {
+    font-family: OpenSans-Light;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 26px;
+    line-height: 30px;
+    text-align: center;
+    color: #fff
+}
+
+.nameCol {
+    height: 113px;
+    width: 121px;
+    background: radial-gradient(50% 50% at 50% 50%, #227C98 0%, rgba(70, 211, 255, 0) 100%);
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+p {
+    text-align: center;
+    padding: 21px;
+    font-size: 50px;
+    color: #FFFFFF;
+    font-weight: bolder;
+    margin-top: 20px;
+}
+
+ion-list {
+    background-color: transparent;
+    margin-top: 20px;
+}
+
+ion-item {
+    --background: rgba(0, 0, 0, 0) !important;
+    background-color: transparent;
+    --border-color: #fff;
+    height: 70px;
+    // --border-color: rgba(0,0,0,0)!important;
+}
+
+img {
+    color: white;
+    height: 40px;
+}
+
+.updateButton {
+    width: 100%;
+    height: 50px;
+    font-size: 20px;
+    font-family: OpenSans-Light;
+    color: white;
+    font-weight: bold;
+    background-color: #6B00C2;
+}
+
+ion-input {
+    color: #fff;
+}

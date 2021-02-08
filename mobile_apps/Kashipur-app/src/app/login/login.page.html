@@ -1,0 +1,84 @@
+<img src="../../assets/login.png" alt="caring mother" style="    
+background-color: rgb(6, 15, 66);
+object-fit: cover;" />
+
+
+
+<ion-content class="background">
+
+    <div>
+        <img src="../../assets/icon.png" alt="caring mother" class="login" />
+
+        <p class="text">Welcome to Connect Bazar, <br />Let's Sign in</p>
+
+        <ion-button (click)="googleSignIn()" expand="block" style="--background: rgb(155, 0, 0);">
+            <ion-icon slot="start" src="../../assets/search.svg"></ion-icon>
+            LOGIN WITH GOOGLE</ion-button>
+        <div class="flex-container">
+            <span>------ </span>
+            <span>OR</span>
+            <span> ------</span>
+        </div>
+        <div style="word-break: break-word">{{socialAccount}}</div>
+        <ion-card>
+            <ion-grid>
+                <!-- <form [formGroup]="LoginForm" (ngSubmit)="login(LoginForm.value)"> -->
+                <form [formGroup]="LoginForm" (ngSubmit)="googleSignIn()">
+                    <ion-row>
+                        <ion-col class="ion-float-left" style="border-bottom: 1px solid #fff;">
+                            <div>
+                                <ion-item style="background-color: transparent;" lines="none">
+                                    <ion-label position="fixed" style="color: #fff;">Email</ion-label>
+                                    <ion-input formControlName="email"></ion-input>
+                                </ion-item>
+                                <div id="errorStyle" *ngIf="formValidation && f.email.errors" class="invalid-feedback">
+                                    <div *ngIf="f.email.errors.required">*Email is required</div>
+                                    <div *ngIf="f.email.errors.email">Enter valid *email</div>
+                                </div>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col class="ion-float-right" style="border-bottom: 1px solid #fff;">
+                            <div>
+                                <ion-item lines="none">
+                                    <ion-label position="fixed" style="color: #fff;">
+                                        Password</ion-label>
+                                    <ion-input type="password" formControlName="password">
+                                    </ion-input>
+                                </ion-item>
+                                <div id="errorStyle" *ngIf="formValidation && f.password.errors" class="invalid-feedback">
+                                    <div *ngIf="f.password.errors.required">*Password is required</div>
+                                </div>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                    <div class="login-ctr">
+                        <button [disabled]="LoginForm.invalid" class="button-submit des-button" type="ngSubmit"> Login</button>
+                    </div>
+                </form>
+            </ion-grid>
+        </ion-card>
+    </div>
+    <ion-row>
+        <ion-col>
+            <p routerLink="/forgotpassord" style="text-align: start; color: white; margin-left: 20px; font-size: 15px;">
+                <u>Forgot password?</u>
+            </p>
+        </ion-col>
+
+        <ion-col>
+            <p routerLink="/home" style="text-align: end; color: white; margin-right: 20px; font-size: 15px;">
+                <u> Skip for now >> </u>
+            </p>
+        </ion-col>
+
+
+    </ion-row>
+    <ng-container *ngIf="signupText">
+        <p class="signup" style="color: white; font-size: 18px;" routerLink="/signup">
+            New User? <u>Signup instead</u>
+        </p>
+    </ng-container>
+
+</ion-content>

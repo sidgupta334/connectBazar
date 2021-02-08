@@ -1,0 +1,7 @@
+{
+    "name": "Connect Bazar",
+    "integrations": {
+        "cordova": {}
+    },
+    "type": "angular"
+}

@@ -1,0 +1,88 @@
+<ion-header>
+    <ion-toolbar color="primary" style="height: 60px">
+        <ion-buttons slot="start">
+            <ion-icon name="arrow-back" routerLink="/home"></ion-icon>
+        </ion-buttons>
+        <ion-title></ion-title>
+        <ion-buttons slot="end" tab="search">
+            <ion-button style="margin-top: 13px" (click)="openModel()">
+                <ion-icon name="search" class="search-icon"></ion-icon>
+            </ion-button>
+            <ion-button style="margin-left: 6px; margin-top: 13px; position: relative" routerLink="/cart">
+                <ion-icon name="cart" style="font-size: 38px"></ion-icon>
+                <ion-badge slot="end" style="border-radius: 50%">{{quantity}}</ion-badge>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="appBackground">
+    <h1 *ngIf="address?.length > 0">Choose your delivery address</h1>
+
+    <div *ngIf="address?.length == 0" class="flex-head">
+        <img src="../../assets/not-found.png" alt="not found" width="40%">
+        <br><br>
+        <h6 style="margin: 0 10px;text-align: center;"> Looks like you don't have any address mapped, let's add new one.</h6>
+    </div>
+
+    <ion-card style="margin-top: 15px" *ngFor="let item of address" [ngClass]="{'back2' : item.selected == true, 'back1': item.selected == false}" (click)="onSelect(item)">
+        <ion-row>
+            <ion-col class="AddressTYpe"> ADDRESS TYPE: {{item.title}} </ion-col>
+        </ion-row>
+
+        <ion-row style="margin-top: 5px">
+            <ion-col size="3" class="Address"> Address: </ion-col>
+            <ion-col class="AddressValue">
+                {{item.address1}} {{item.address2}}
+            </ion-col>
+        </ion-row>
+
+        <ion-row style="margin-top: 0px">
+            <ion-col class="Address" id="align">Pincode:<span class="AddressValue">{{item.pincode}}</span>
+            </ion-col>
+            <ion-col size="3"> </ion-col>
+            <ion-col class="Address" id="align">City: <span class="AddressValue">{{item.city}}</span>
+            </ion-col>
+        </ion-row>
+
+        <ion-row style="margin-top: 0px">
+            <ion-col class="Address" id="align">State:<span class="AddressValue">{{item.state}}</span>
+            </ion-col>
+            <ion-col size="3"> </ion-col>
+            <ion-col class="Address" id="align">
+                Country:<span class="AddressValue">{{item.country}}</span>
+            </ion-col>
+        </ion-row>
+
+        <div class="mob">
+            <p>Mobile:{{item.mobile}}</p>
+        </div>
+    </ion-card>
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button class="des-button" style="border-radius: 40px;" (click)="openModalPage()">
+            <ion-icon name="add" style="color: white; font-weight: bold; font-size: 30px"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+</ion-content>
+
+<div class="cart-background" style="padding-left: 20px;height: 80px;">
+    <br>
+    <ion-checkbox (ionChange)="verifyEvent($event)"></ion-checkbox>
+    <ion-label style="
+      color: #fff;
+      font-family: OpenSans-Light;
+      font-weight: bold;
+      font-size: 20px;
+      margin-left: 10px;
+    ">Opt for Contactless Delivery</ion-label>
+</div>
+
+<ion-row class="cart-background">
+    <ion-col>
+        <button class="placeorder des-button" (click)="verifyPin('COD')">Confirm Order</button>
+    </ion-col>
+    <!-- <ion-col>
+        <button class="placeorder des-button" (click)="verifyPin('ONLINE')">Order via UPI</button>
+    </ion-col> -->
+</ion-row>

@@ -87,7 +87,10 @@ public class CartController {
 		// Validate token
 		Users user = tokenService.validateToken(token);
 		if (user == null) {
-			return ResponseEntity.status(401).body(new GeneralResponse("Unauthorized"));
+			CartResponse res = new CartResponse();
+			res.setNetQuantity(new Long(0));
+			res.setNetTotal(new Long(0));
+			return ResponseEntity.ok(res);
 		}
 
 		CartResponse res = service.viewCart(user);

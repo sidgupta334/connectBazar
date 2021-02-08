@@ -66,11 +66,11 @@ public interface OrderRepository extends JpaRepository<Orders, Long> {
 	public List<Orders> fetchByFilterDatesAndVendor(@Param("startDate") LocalDate startDate,
 			@Param("endDate") LocalDate endDate, @Param("vendorId") Long vendorId);
 
-	@Query("from Orders where order_date >= :startDate and order_date <= :endDate")
+	@Query("from Orders where order_date >= :startDate and order_date <= :endDate and order_Status <> 'CANCELLED_COD' and order_Status <> 'CANCELLED_ONLINE'")
 	public List<Orders> fetchAllByFilterDates(@Param("startDate") LocalDate startDate,
 			@Param("endDate") LocalDate endDate);
 	
-	@Query("from Orders where order_date >= :startDate and order_date <= :endDate and vendor_id = :vendorId")
+	@Query("from Orders where order_date >= :startDate and order_date <= :endDate and vendor_id = :vendorId and order_Status <> 'CANCELLED_COD' and order_Status <> 'CANCELLED_ONLINE'")
 	public List<Orders> fetchAllByFilterDatesAndVendor(@Param("startDate") LocalDate startDate,
 			@Param("endDate") LocalDate endDate, @Param("vendorId") Long vendorId);
 

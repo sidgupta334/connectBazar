@@ -1,0 +1,83 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "com-darryncampbell-cordova-plugin-intent": {
+      "PACKAGE_NAME": "io.ionic.connectBazar"
+    },
+    "cordova-plugin-android-permissions": {
+      "PACKAGE_NAME": "io.ionic.connectBazar"
+    },
+    "cordova-plugin-androidx": {
+      "PACKAGE_NAME": "io.ionic.connectBazar"
+    },
+    "cordova-plugin-androidx-adapter": {
+      "PACKAGE_NAME": "io.ionic.connectBazar"
+    },
+    "cordova-plugin-datepicker": {
+      "PACKAGE_NAME": "io.ionic.connectBazar"
+    },
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "io.ionic.connectBazar"
+    },
+    "cordova-plugin-geolocation": {
+      "PACKAGE_NAME": "io.ionic.connectBazar"
+    },
+    "cordova-plugin-googleplus": {
+      "WEB_APPLICATION_CLIENT_ID": "466240699521-n9crp5ut67m8r00i0re1old479tcu211.apps.googleusercontent.com",
+      "PACKAGE_NAME": "io.ionic.connectBazar"
+    },
+    "cordova-plugin-ionic-keyboard": {
+      "PACKAGE_NAME": "io.ionic.connectBazar"
+    },
+    "cordova-plugin-ionic-webview": {
+      "PACKAGE_NAME": "io.ionic.connectBazar"
+    },
+    "cordova-plugin-local-notification": {
+      "PACKAGE_NAME": "io.ionic.connectBazar"
+    },
+    "cordova-plugin-nativegeocoder": {
+      "PACKAGE_NAME": "io.ionic.connectBazar"
+    },
+    "cordova-plugin-network-information": {
+      "PACKAGE_NAME": "io.ionic.connectBazar"
+    },
+    "cordova-plugin-request-location-accuracy": {
+      "PACKAGE_NAME": "io.ionic.connectBazar"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "io.ionic.connectBazar"
+    },
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "io.ionic.connectBazar"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "io.ionic.connectBazar"
+    },
+    "phonegap-plugin-mobile-accessibility": {
+      "PACKAGE_NAME": "io.ionic.connectBazar"
+    },
+    "uk.co.workingedge.phonegap.plugin.launchnavigator": {
+      "PACKAGE_NAME": "io.ionic.connectBazar"
+    }
+  },
+  "dependent_plugins": {
+    "cordova-plugin-add-swift-support": {
+      "PACKAGE_NAME": "io.ionic.connectBazar"
+    },
+    "cordova-plugin-badge": {
+      "PACKAGE_NAME": "io.ionic.connectBazar"
+    },
+    "cordova-support-google-services": {
+      "PACKAGE_NAME": "io.ionic.connectBazar"
+    },
+    "phonegap-plugin-multidex": {
+      "PACKAGE_NAME": "io.ionic.connectBazar"
+    }
+  }
+}

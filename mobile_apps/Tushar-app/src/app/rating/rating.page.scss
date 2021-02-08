@@ -1,0 +1,63 @@
+.prodDesc {
+    font-family: OpenSans-Light;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    color: #c2c2c2;
+    text-align: center;
+}
+
+#prodText {
+    text-align: left;
+}
+
+.feedback {
+    font-family: OpenSans-Light;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    color: #c2c2c2;
+    border: 1px solid #c2c2c2;
+    height: 120px;
+}
+
+.button {
+    width: 50%;
+    height: 50px;
+    font-size: 18px;
+    font-family: OpenSans-Light;
+}
+
+.order-row {
+    color: white;
+    text-align: center;
+    padding-right: 10px;
+    padding-left: 10px;
+    font-weight: bold;
+    font-family: OpenSans-Light;
+    margin-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid aquamarine;
+}
+
+.order-col {
+    color: white;
+    font-size: 22px;
+    font-weight: normal;
+}
+
+.order-title {
+    font-family: OpenSans-Light;
+    font-style: normal;
+    font-size: 17px;
+    color: #fff;
+    font-weight: bold;
+    padding-left: 15px;
+    padding-top: 6px;
+    border-bottom: 2px solid aquamarine;
+}
+
+#order-value {
+    text-align: end;
+    padding-right: 15px;
+}

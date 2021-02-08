@@ -1,0 +1,31 @@
+<ion-content class="background" style="background-color: rgb(6, 15, 66);">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-icon name="arrow-back" routerLink="/login"></ion-icon>
+        </ion-buttons>
+    </ion-toolbar>
+
+    <ion-grid>
+        <p class="text">Looks like you signed in first time. <br> Please provide required details</p>
+        <ion-card>
+            <form class="ion-padding" [formGroup]="ActivateForm" (ngSubmit)="completeRegistration(ActivateForm.value)">
+                <ion-row>
+                    <ion-col class="ion-float-right">
+                        <div>
+                            <ion-item>
+                                <ion-label position="fixed" style="color: #fff;">
+                                    Phone: +91</ion-label>
+                                <ion-input style="color: #fff;" type="tel" maxlength="10" (keypress)="numberOnlyValidation($event)" formControlName="phone">
+                                </ion-input>
+                            </ion-item>
+                        </div>
+                    </ion-col>
+
+                    <button class="button-submit des-button" type="ngSubmit">
+                        Complete Registration</button>
+
+                </ion-row>
+            </form>
+        </ion-card>
+    </ion-grid>
+</ion-content>

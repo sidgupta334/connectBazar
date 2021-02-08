@@ -1,0 +1,136 @@
+<ion-header>
+    <ion-toolbar color="primary" style="height: 52px;">
+        <ion-buttons slot="start">
+            <ion-icon name="arrow-back" routerLink="/home"></ion-icon>
+        </ion-buttons>
+        <ion-title>Review Cart</ion-title>
+        <ion-buttons slot="end" tab="search">
+            <ion-button (click)="openModel()">
+                <ion-icon name="search" class="cart-icon"></ion-icon>
+            </ion-button>
+            <ion-button style="margin-left: 6px; position: relative;" routerLink="/cart">
+                <ion-icon name="cart" style="font-size: 24px;"></ion-icon>
+                <ion-badge slot="end" style="border-radius: 50%;">{{quantity}}</ion-badge>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content class="appBackground">
+
+
+    <div *ngIf="showMsg" style="margin-top: 60px;">
+        <h1 style="font-size: 24px; color: aliceblue; text-align: center;">NO ITEM IN CART</h1>
+        <h4 style="text-align: center; color: #fff;" routerLink="/home"> Continue Shoping</h4>
+    </div>
+
+    <div *ngIf="showCart">
+        <ion-card class="ion-card-category" *ngFor="let items of cart">
+            <ion-row>
+                <ion-col size="4">
+                    <img class="cart-image" [src]="items.url" alt="caring mother" />
+                </ion-col>
+
+                <ion-col class="cate-ion-col">
+                    <div class="cate-parent">
+                        <div class="rupee-status">
+                            <p class="class-ruppee">
+                                ₹{{items.newPrice}}
+                                <span> <del class="class-del">₹{{items.oldPrice}}</del> </span>
+                                <span>
+                  <label class="class-off-button" id="product-label">
+                    {{items.discountPercentage}}% Off
+                  </label>
+                </span>
+                            </p>
+                        </div>
+
+                        <div class="branddiv">
+                            <p class="class-product">
+                                {{items.productName}}<span class="class-brand">
+                  - ({{items.brand}})
+                </span>
+                                <span> </span>
+                            </p>
+                        </div>
+
+                        <div class="cate-more">
+                            <ion-button class="incButton des-button" (click)="removeFromCart(items)">-</ion-button>
+                            <p class="incText">{{items.quantity}}</p>
+                            <ion-button class="decButton des-button" (click)="addToCart(items)">+</ion-button>
+                        </div>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </ion-card>
+    </div>
+
+    <div *ngIf="showCart">
+        <div *ngIf="hasGotResponse">
+            <form [formGroup]="Promo" (ngSubmit)="applyPromo(Promo.value)">
+                <p class="promocode">Have Promocode?</p>
+                <ion-row style="margin-top: -30px;margin-left: 10%;">
+                    <ion-col class="ion-float-right" size="8">
+                        <div>
+                            <ion-item style="background-color: transparent;">
+                                <ion-input type="text" style="color: #fff;" formControlName="couponName"> </ion-input>
+                            </ion-item>
+                            <div id="errorStyle" *ngIf="checkValid && Promo.controls.couponName.errors" class="invalid-feedback">
+                                <div *ngIf="Promo.controls.couponName.errors.required">*enter coupon code</div>
+                            </div>
+                        </div>
+                    </ion-col>
+
+                    <div *ngIf="couponButton">
+                        <ion-button class="des-button" type="ngSubmit"> Apply</ion-button>
+                    </div>
+
+
+                    <div *ngIf="couponButtonApplied">
+                        <ion-button class="">
+                            Applied</ion-button>
+                    </div>
+                    <ion-col>
+                    </ion-col>
+                </ion-row>
+            </form>
+        </div>
+    </div>
+
+</ion-content>
+
+
+
+<div *ngIf="showCart && hasGotResponse">
+    <div class="cart-background" style="border-top: 1px solid #E5E5E5;">
+        <div>
+            <p style="margin-bottom: -19px; margin-left: 25px;">TOTAL</p>
+            <ion-row>
+                <ion-col class="ion-float-right" size="6">
+
+                    <ng-container *ngIf="withoutCoupon">
+                        <p class="promocode" style="font-weight: bold; font-size: 24px;margin-left:20px">₹ {{total}}
+                        </p>
+                    </ng-container>
+
+                    <ng-container *ngIf="couponApplied">
+                        <p class="promocode" style="font-weight: bold; font-size: 24px;margin-left:20px">₹ {{updatedPrice}}
+                            <span><del style="color: grey; font-size: 20px;">₹{{oldPrice}} </del> </span>
+                        </p>
+                    </ng-container>
+
+
+                </ion-col>
+
+                <ion-col size="6">
+                    <ion-button class="checkout-button des-button" type="ngSubmit" routerLink="/choose-address">
+                        CHECKOUT
+                        <ion-icon name="arrow-forward" style="font-size: 20px; color: #fff; margin-left: 15px;"></ion-icon>
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+        </div>
+        <div style="font-size: 12px; color: rgb(106, 221, 30); margin: 0 5px;">
+            <span>We deliver orders within 2 hours (if ordered before 6 PM), if ordered after 6 PM, it will be delivered within 2 hours next working day.</span>
+        </div>
+    </div>
+</div>

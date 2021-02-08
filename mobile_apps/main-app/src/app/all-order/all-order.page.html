@@ -1,0 +1,50 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-icon name="arrow-back" routerLink="/home"></ion-icon>
+        </ion-buttons>
+        <ion-title>ALL ORDERS</ion-title>
+        <ion-buttons style="width: 110px;" slot="end" tab="search">
+            <ion-button (click)="openModal()">
+                <ion-icon name="search" class="cart-icon"></ion-icon>
+            </ion-button>
+            <ion-button style="margin-left: 6px; position: relative;width: 90px;" routerLink="/cart">
+                <ion-icon name="cart" style="font-size: 24px; margin-left: -30px;"></ion-icon>
+                <ion-badge slot="end" style="border-radius: 50%; margin-top: -5px; margin-left: -10px;">{{quantity}}</ion-badge>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="appBackground">
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content>
+        </ion-refresher-content>
+    </ion-refresher>
+
+    <ion-card *ngFor="let item of order">
+
+        <ion-grid>
+            <ion-row class="order-row">
+                <ion-col class="order-col" style="font-weight: lighter;">Order Id: <span style="font-weight: bolder;">{{item.orderId}}</span></ion-col>
+            </ion-row>
+
+            <ion-row class="order-title">
+                <ion-col size="6">Order Date</ion-col>
+                <ion-col size="6" id="order-value">{{item.orderDate}}</ion-col>
+                <ion-col size="6">Order Status</ion-col>
+                <ion-col size="6" id="order-value" style="color: #1FCA1C;">{{item.orderStatus}}</ion-col>
+                <ion-col size="6">Item Count</ion-col>
+                <ion-col size="6" id="order-value">{{item.netQuantity}}</ion-col>
+            </ion-row>
+        </ion-grid>
+
+        <ion-row class="order-Final-title">
+            <ion-col size="6">Final Amount</ion-col>
+            <ion-col size="6" id="order-value">₹ {{item.finalTotal}}</ion-col>
+        </ion-row>
+
+        <ion-button class="des-button" [routerLink]="['/view-order', item.orderId]">View Order</ion-button>
+    </ion-card>
+
+</ion-content>

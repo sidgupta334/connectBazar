@@ -1,0 +1,90 @@
+<ion-header>
+    <ion-toolbar color="primary" style="height: 60px">
+
+        <ion-searchbar style="margin-top: 12px;" showCancelButton="focus" (ionCancel)="onCancel($event)" [(ngModel)]="searchTerm" animated="true" debounce="1500" (ionChange)="searchProducts()"></ion-searchbar>
+        <ion-buttons slot="end" tab="search">
+            <ion-button style="margin-left: 6px; margin-top: 13px; position: relative" (click)="searchDismiss($event)">
+                <ion-icon name="cart" style="font-size: 24px"></ion-icon>
+                <ion-badge slot="end" style="border-radius: 50%">{{quantity}}</ion-badge>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="appBackground">
+    <div class="NoProduct" *ngIf="showSearchText">
+        <img src="../../assets/seo.png" width="100" class="img-notFound" alt=""><br>
+        <span> Looking for something else? Search here </span>
+    </div>
+
+    <div class="NoProduct" *ngIf="showNoProduct">
+        <img src="../../assets/empty-cart.png" width="100" class="img-notFound" alt=""><br>
+        <span class="NoProduct-text"> Sorry! we couldn't found any product with '{{searchTerm}}'. </span>
+    </div>
+
+    <div *ngIf="hideProduct">
+        <ion-card class="ion-card-category" style="height: 220px;" *ngFor="let items of productList; let  i =index ">
+            <ion-row>
+                <ion-col size="4" (click)="particularProduct(items)">
+                    <img class="cart-image" [src]="items.url" alt="caring mother" />
+                </ion-col>
+
+                <ion-col class="cate-ion-col">
+                    <div class="cate-parent">
+                        <div class="rupee-status" (click)="particularProduct(items)">
+                            <p class="class-ruppee">
+                                ₹{{items.newPrice}}
+                                <span> <del class="class-del">₹{{items.oldPrice}}</del> </span>
+                                <span>
+                                    <label class="class-off-button" id="product-label">
+                                        {{items.discountPercentage}}% Off
+                                    </label>
+                                </span>
+                            </p>
+                        </div>
+
+                        <div class="branddiv" (click)="particularProduct(items)" style="margin: 20px 0;">
+                            <p class="class-product">
+                                {{items.productName}}<span class="class-brand">
+                                    - ({{items.brand}})
+                                </span>
+                            </p>
+                        </div>
+
+                        <!-- condition to show cart button and out of stock -->
+
+                        <ng-container *ngIf="show == false">
+                            <!-- condition user not authorized -->
+                            <button class="cartButton" (click)="moveWithToast()">ADD TO CART</button>
+                        </ng-container>
+
+                        <ng-container *ngIf="show == true">
+                            <!-- condition for authorized user-->
+                            <ng-container *ngIf="items.available == true; then addTocart else stock"></ng-container>
+
+                            <ng-template #addTocart>
+                                <div *ngIf="items.visible == true">
+                                    <button class="cartButton" (click)="addToCart(items,i)">
+                                        ADD TO CART
+                                    </button>
+                                </div>
+
+                                <div *ngIf="items.visible == false" class="cate-more">
+                                    <ion-button class="incButton" (click)="removeFromCart(items,i)">-</ion-button>
+                                    <p class="incText">{{items.quantity}}</p>
+                                    <ion-button class="decButton" (click)="addToCart(items,i)">+</ion-button>
+                                </div>
+                            </ng-template>
+
+                            <ng-template #stock>
+                                <p class="stock">OUT OF STOCK</p>
+                            </ng-template>
+                        </ng-container>
+                    </div>
+
+                </ion-col>
+            </ion-row>
+            <div class="category-item"> SHOP: {{items.categoryName}} </div>
+        </ion-card>
+    </div>
+</ion-content>

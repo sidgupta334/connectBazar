@@ -1,0 +1,29 @@
+.background {
+    --background: url(../../assets/login.png) repeat-x 0% 0%;
+}
+
+.text {
+    color: #fff;
+    text-align: center;
+    font-size: 24px;
+    margin-top: 50%;
+}
+
+ion-card {
+    background: rgba(196, 196, 196, 0.12);
+    border-radius: 15px;
+}
+
+ion-item {
+    --background: rgba(0, 0, 0, 0) !important;
+    --border-color: #fff;
+    // --border-color: rgba(0,0,0,0)!important;
+}
+
+ion-input {
+    font-family: OpenSans-Light;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    color: #fff;
+}

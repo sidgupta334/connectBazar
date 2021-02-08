@@ -1,0 +1,56 @@
+<ion-header>
+    <ion-toolbar color="primary" style="height: 60px;">
+        <ion-buttons slot="start">
+            <ion-icon name="arrow-back" routerLink="/view-order"></ion-icon>
+        </ion-buttons>
+        <ion-title>View Your Feedback</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="appBackground">
+
+    <ion-grid>
+        <ion-row class="order-row">
+            <ion-col class="order-col">Order ID: <span style="font-weight: bold;">{{feedbackDetails?.orderId}}</span></ion-col>
+        </ion-row>
+
+        <ion-row class="order-title">
+            <ion-col size="6">Order Date</ion-col>
+            <ion-col size="6" id="order-value">{{feedbackDetails?.orderDate}}</ion-col>
+            <ion-col size="6">Delivery Date</ion-col>
+            <ion-col size="6" id="order-value">{{feedbackDetails?.deliveryDate}}</ion-col>
+            <ion-col size="6">Item Count</ion-col>
+            <ion-col size="6" id="order-value">{{feedbackDetails?.netQuantity}}</ion-col>
+            <ion-col size="6">Order Value</ion-col>
+            <ion-col size="6" id="order-value" style="color: #1FCA1C;">{{feedbackDetails?.finalTotal}}</ion-col>
+        </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+        <h1 class="prodDesc" style="font-size: 24px;">View Your Feedback</h1>
+
+        <ion-row style="margin-top: 20px;">
+
+            <ion-col size="6" class="prodDesc">
+                <p id="prodText">Delivery Standard</p>
+            </ion-col>
+            <ion-col size="6">
+                <ionic5-star-rating #rating activeIcon="star" defaultIcon="star-outline" activeColor="#6B00C2" defaultColor="#f4f4f4" readonly="true" rating={{feedbackDetails?.deliveryFeedback}} fontSize="32px">
+                </ionic5-star-rating>
+            </ion-col>
+
+            <ion-col size="6" class="prodDesc">
+                <p id="prodText">Order Quality</p>
+            </ion-col>
+            <ion-col size="6">
+                <ionic5-star-rating #rating1 activeIcon="star" defaultIcon="star-outline" activeColor="#6B00C2" defaultColor="#f4f4f4" readonly="true" rating={{feedbackDetails?.itemsFeedback}} fontSize="32px">
+                </ionic5-star-rating>
+            </ion-col>
+            <ion-textarea class="feedback" rows="4" cols="20" disabled="true">{{feedbackDetails?.feedback}}</ion-textarea>
+        </ion-row>
+
+    </ion-grid>
+
+    <div style="text-align: center;">
+        <ion-button class="button" routerLink="/view-order">Back</ion-button>
+    </div>

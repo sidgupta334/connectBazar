@@ -1,0 +1,120 @@
+ion-title {
+    font-family: OpenSans-Light;
+    font-style: normal;
+    font-weight: bolder;
+    font-size: 28px;
+    line-height: 30px;
+    text-align: left;
+    color: #fff;
+    position: absolute;
+    bottom: 9px;
+}
+
+.order-row {
+    color: white;
+    text-align: center;
+    padding-right: 10px;
+    padding-left: 10px;
+    font-weight: bold;
+    font-family: OpenSans-Light;
+    margin-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid aquamarine;
+}
+
+.order-col {
+    color: white;
+    font-size: 22px;
+    font-weight: normal;
+}
+
+.order-title {
+    font-family: OpenSans-Light;
+    font-style: normal;
+    font-size: 17px;
+    color: #fff;
+    font-weight: bold;
+    padding-left: 15px;
+    padding-top: 6px;
+    border-bottom: 2px solid aquamarine;
+}
+
+#order-value {
+    text-align: end;
+    padding-right: 15px;
+}
+
+.order-item {
+    color: white;
+    text-align: center;
+    padding-right: 10px;
+    padding-left: 10px;
+    font-weight: bold;
+    font-family: OpenSans-Light;
+    margin-top: 10px;
+}
+
+#text-color {
+    color: white;
+}
+
+.button {
+    width: 90%;
+    margin-left: 5%;
+    border-radius: 15px;
+    height: 50px;
+    font-size: 20px;
+    font-family: OpenSans-Light;
+    color: white;
+    font-weight: bold;
+    background-color: #6B00C2;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+ion-card {
+    background: #1f2238;
+    border-radius: 15px;
+    -webkit-box-shadow: 1px 5px 14px 0px rgba(0, 1, 0, 0.8);
+    -moz-box-shadow: 1px 5px 14px 0px rgba(0, 1, 0, 0.8);
+    box-shadow: 1px 5px 14px 0px rgba(0, 1, 0, 0.8);
+}
+
+img {
+    width: 30px;
+    width: 95px;
+    height: 95px;
+    padding: 4px;
+    border-radius: 15px;
+}
+
+p {
+    font-family: OpenSans-Light;
+    font-weight: bold;
+    font-size: 16px;
+    color: #C3C3C3;
+}
+
+.order-total {
+    font-family: OpenSans-Light;
+    font-style: normal;
+    font-size: 17px;
+    color: #fff;
+    font-weight: bold;
+    padding-left: 15px;
+    padding-top: 6px;
+}
+
+// ======================media query css for small devices ===============//
+@media only screen and (max-width: 360px) {
+    ion-title {
+        font-family: OpenSans-Light;
+        font-style: normal;
+        font-weight: bolder;
+        font-size: 20px;
+        line-height: 30px;
+        color: #fff;
+        margin-left: -10px;
+        margin-bottom: 3px;
+    }
+}

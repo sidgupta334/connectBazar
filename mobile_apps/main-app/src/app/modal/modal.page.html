@@ -1,0 +1,172 @@
+<ion-header>
+    <ion-toolbar color="primary">
+
+        <ion-title>ADD/EDIT </ion-title>
+        <ion-buttons slot="end" tab="search">
+
+            <ion-button style="margin-left: 6px; position: relative;">
+                <p style="color: turquoise;" (click)="dismiss()">CLOSE</p>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="background">
+    <ion-grid>
+        <ion-card style="min-height: 570px; background: #1f2238; box-shadow: 1px 5px 14px 0px rgba(0, 1, 0, 0.8);">
+            <form [formGroup]="AddressForm">
+                <ion-row>
+                    <ion-col>
+                        <ion-item lines="none">
+                            <ion-label position="fixed" style="color: #fff;">
+                                Address Type</ion-label>
+                            <ion-select style="margin-left: 40px; color: #fff;" placeholder="Select" formControlName="title" [(ngModel)]="title">
+                                <ion-select-option value="OFFICE">OFFICE</ion-select-option>
+                                <ion-select-option value="HOME">HOME</ion-select-option>
+                                <ion-select-option value="OTHER">OTHER</ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                        <div id="errorStyle" *ngIf="checkValid && f.title.errors" class="invalid-feedback">
+                            <div *ngIf="f.title.errors.required">*title is required</div>
+                        </div>
+                    </ion-col>
+                </ion-row>
+
+
+                <ion-row>
+                    <ion-col class="ion-float-right">
+                        <ion-item lines="none">
+                            <ion-label position="fixed" style="color: #fff;">
+                                Mobile</ion-label> <span style="color: white">+91-</span>
+                            <ion-input (keypress)="numberOnlyValidation($event)" type="tel" formControlName="mobile" [(ngModel)]="mobile" maxlength="10">
+                            </ion-input>
+                        </ion-item>
+                        <div id="errorStyle" *ngIf="checkValid && f.mobile.errors" class="invalid-feedback">
+                            <div *ngIf="f.mobile.errors.required">*Mobile no is required</div>
+                            <div *ngIf="f.mobile.errors.pattern">Enter valid *Mobile No</div>
+                        </div>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col>
+                        <ion-item lines="none">
+                            <ion-label position="fixed" style="color: #fff;">
+                                Address</ion-label>
+                            <ion-input type="text" formControlName="address1" [(ngModel)]="address1">
+                            </ion-input>
+                        </ion-item>
+                        <div id="errorStyle" *ngIf="checkValid && f.address1.errors" class="invalid-feedback">
+                            <div *ngIf="f.address1.errors.required">*Address is required</div>
+                        </div>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col>
+                        <ion-item lines="none">
+                            <ion-label position="fixed" style="color: #fff;">
+                                Landmark</ion-label>
+                            <ion-input type="text" formControlName="address2" [(ngModel)]="address2">
+                            </ion-input>
+                        </ion-item>
+                        <div id="errorStyle" *ngIf="checkValid && f.address2.errors" class="invalid-feedback">
+                            <div *ngIf="f.address2.errors.required">*Landmark is required</div>
+                        </div>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col>
+                        <ion-item lines="none">
+                            <ion-label position="fixed" style="color: #fff;">
+                                City</ion-label>
+                            <ion-input type="text" formControlName="city" [(ngModel)]="city">
+                            </ion-input>
+                        </ion-item>
+                        <div id="errorStyle" *ngIf="checkValid && f.city.errors" class="invalid-feedback">
+                            <div *ngIf="f.city.errors.required">*City is required</div>
+                        </div>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col>
+                        <ion-item lines="none">
+                            <ion-label position="fixed" style="color: #fff;">
+                                Pincode</ion-label>
+                            <ion-input type="tel" (keypress)="numberOnlyValidation($event)" maxLength=6 formControlName="pincode" [(ngModel)]="pincode">
+                            </ion-input>
+                        </ion-item>
+                        <div id="errorStyle" *ngIf="checkValid && f.pincode.errors" class="invalid-feedback">
+                            <div *ngIf="f.pincode.errors.required">*Pincode is required</div>
+                            <div *ngIf="f.pincode.errors.pattern">Enter valid *Pincode</div>
+                        </div>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col>
+                        <ion-item lines="none">
+                            <ion-label position="fixed" style="color: #fff;">
+                                State</ion-label>
+                            <ion-input type="text" formControlName="state" [(ngModel)]="state">
+                            </ion-input>
+                        </ion-item>
+                        <div id="errorStyle" *ngIf="checkValid && f.pincode.errors" class="invalid-feedback">
+                            <div *ngIf="f.state.errors.required">*state is required</div>
+
+                        </div>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col>
+                        <ion-item lines="none">
+                            <ion-label position="fixed" style="color: #fff;">
+                                Country</ion-label>
+                            <ion-input type="text" formControlName="country" [(ngModel)]="country">
+                            </ion-input>
+                        </ion-item>
+                        <div id="errorStyle" *ngIf="checkValid && f.country.errors" class="invalid-feedback">
+                            <div *ngIf="f.country.errors.required">*Country is required</div>
+
+                        </div>
+                    </ion-col>
+                </ion-row>
+
+
+                <ng-container *ngIf="mapButton == true">
+                    <div style="color: rgb(49, 192, 13); margin-left: 10px;">
+                        Note: Its mandatory to choose your address from Map to register your address as it will help us to make your delivery experience better.
+                    </div>
+                    <ion-button [disabled]="AddressForm.invalid" class="mapbutton des-button" (click)="loadMap()">Add Address From Map</ion-button>
+                </ng-container>
+
+
+                <ng-container *ngIf="showMap">
+                    <div class="map-wrapper">
+                        <div id="map_center">
+                            <img style="width: 50px; background: transparent;" src="../../assets/marker.png" />
+                        </div>
+                        <div #map id="map"></div>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="mapButton == false">
+                    <div *ngIf="showAddForm">
+                        <button class="AddressSave" type="ngSubmit" (click)="registerAddress(AddressForm.value)">
+          Save Address
+        </button>
+                    </div>
+
+                    <div *ngIf="showEditForm">
+                        <button class="AddressSave" type="ngSubmit" (click)="updateAddress(AddressForm.value)">
+          Update Address
+        </button>
+                    </div>
+                </ng-container>
+            </form>
+        </ion-card>
+    </ion-grid>
+</ion-content>

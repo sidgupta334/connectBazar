@@ -1,0 +1,79 @@
+<ion-header>
+    <ion-toolbar color="primary" style="height: 52px;">
+        <ion-buttons slot="start">
+            <ion-icon name="arrow-back" routerLink="/home"></ion-icon>
+        </ion-buttons>
+        <ion-title>ADDRESS</ion-title>
+        <ion-buttons class="cus-ion-buttons" slot="end" tab="search">
+            <ion-button (click)="openSearchModal()">
+                <ion-icon name="search" class="search-icon"></ion-icon>
+            </ion-button>
+            <ion-button routerLink="/cart">
+                <ion-icon name="cart" class="cart-icon"></ion-icon>
+                <ion-badge slot="end" style="border-radius: 50%;">{{quantity}}</ion-badge>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="background">
+    <ng-container *ngIf="chooseAddress == true;else manage">
+        <h1>No address found, add new address</h1>
+    </ng-container>
+    <ng-template #manage>
+        <h1>Manage Your Address</h1>
+    </ng-template>
+
+
+    <ion-card style="margin-top: 15px;" class="category-card" *ngFor="let item of address">
+
+
+        <ion-row>
+            <ion-col class="AddressTYpe"> ADDRESS TYPE: {{item.title}} </ion-col>
+        </ion-row>
+
+        <ion-row style="margin-top: 5px;">
+            <ion-col size="3" class="Address"> Address: </ion-col>
+            <ion-col class="AddressValue"> {{item.address1}} {{item.address2}} </ion-col>
+        </ion-row>
+
+        <ion-row style="margin-top: 0px;">
+            <ion-col class="Address" id="align">Pincode:<span class="AddressValue">{{item.pincode}}</span> </ion-col>
+            <ion-col size="3"> </ion-col>
+            <ion-col class="Address" id="align">City: <span class="AddressValue">{{item.city}}</span> </ion-col>
+        </ion-row>
+
+
+        <ion-row style="margin-top: 0px;">
+            <ion-col class="Address" id="align">State:<span class="AddressValue">{{item.state}}</span> </ion-col>
+            <ion-col size="3"> </ion-col>
+            <ion-col class="Address" id="align"> Country:<span class="AddressValue">{{item.country}}</span> </ion-col>
+        </ion-row>
+
+        <div class="FabPosition">
+            <button class="fab" style="margin-right:15px;" (click)="openEditModal(item)">
+      <img src="../../assets/edit.png" style="color: white;font-weight: bold;height: 25px;" />
+    </button>
+
+
+            <button class="fab" id="back" (click)="deleteAddress(item.addressId)">
+      <ion-icon name="close" style="color: white; font-weight: bold; font-size: 26px;"></ion-icon>
+    </button>
+
+        </div>
+    </ion-card>
+</ion-content>
+
+
+<div style="background-color: #050714;">
+    <ion-row class="order-total" id="text-color" style="height: 86px;">
+    </ion-row>
+</div>
+
+
+
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button class="des-button" style="border-radius: 40px;" (click)="openModal()">
+        <ion-icon name="add" style="color: white;font-weight: bold;font-size: 50px;"></ion-icon>
+    </ion-fab-button>
+</ion-fab>

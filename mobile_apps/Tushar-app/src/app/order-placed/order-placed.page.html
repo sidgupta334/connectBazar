@@ -1,0 +1,16 @@
+<ion-header>
+    <ion-toolbar color="primary" style="height: 60px;">
+        <ion-buttons slot="start">
+            <ion-icon name="arrow-back" routerLink="/home"></ion-icon>
+        </ion-buttons>
+        <ion-title>ORDER CONFIRMED</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="appBackground">
+
+    <p class="text">Awesome! <br />Your order is confirmed</p>
+    <img src="../../assets/correct.png" alt="caring mother" />
+    <ion-button class="button des-button" [routerLink]="['/view-order',id]">View Order</ion-button>
+
+</ion-content>
