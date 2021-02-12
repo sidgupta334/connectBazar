@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import {
   FormControl,
   Validators,
@@ -12,7 +13,6 @@ import { Router } from '@angular/router';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { CommomService } from '../commom.service';
 import { LoadingController } from '@ionic/angular';
-import { GooglePlus } from '@ionic-native/google-plus/ngx';
 
 @Component({
   selector: 'app-login',
@@ -24,6 +24,7 @@ export class LoginPage implements OnInit {
   formValidation = false; // to check is form valid
   userData: any;
   signupText: boolean = true;
+  socialAccount: any;
 
   constructor(
     private fb: FormBuilder,
@@ -75,7 +76,6 @@ export class LoginPage implements OnInit {
 
   // ===================Post method for login================//
   async login(value) {
-    console.log(value);
     this.formValidation = true;
 
     // stop here if form is invalid
@@ -90,8 +90,7 @@ export class LoginPage implements OnInit {
     });
     loading.present();
     p.subscribe(
-      async res => {
-        console.log(res);
+      async (res: any) => {
         await loading.dismiss();
 
         localStorage.setItem('grocericatoken', res.token);
@@ -115,13 +114,10 @@ export class LoginPage implements OnInit {
 
           p.subscribe(
             async res => {
-              console.log(res);
               await loading.dismiss();
               this.router.navigate(['/activate-otp']);
             },
-            error => {
-              console.log(error);
-            }
+            error => {}
           );
         }
 
@@ -134,26 +130,51 @@ export class LoginPage implements OnInit {
   }
 
   async googleSignIn() {
-    console.log('hellloooo');
     const loading = await this.loadingController.create({
       message: 'Please wait...',
     });
     loading.present();
     this.googlePlus
-      .login({})
+      .login({
+        scopes: 'profile email phone',
+      })
       .then(result => {
-        console.log(result);
         loading.dismiss();
-
-        localStorage.setItem('grocericatoken', result.accessToken);
+        this.socialAccount = JSON.stringify(result);
+        console.log('Result of google login: ', result);
         localStorage.setItem('grocericastart', 'starttoken');
         localStorage.setItem('grocericaemail', result.email);
-        localStorage.setItem('user', result.givenName);
-        this.router.navigate(['/home']);
+        localStorage.setItem('user', result.displayName);
+
+        // Call Social login API:
+        let socialDto = {
+          email: result.email,
+          fullName: result.displayName,
+          userId: result.userId,
+        };
+        this.api.loginAsSocial(socialDto).subscribe(
+          (res: any) => {
+            localStorage.setItem('grocericatoken', res.token);
+            this.router.navigate(['/home']);
+          },
+          err => {
+            if (err.error.message == 'PHONE_REQUIRED') {
+              localStorage.setItem('grocericastart', 'starttoken');
+              localStorage.setItem('grocericaemail', result.email);
+              localStorage.setItem('user', result.displayName);
+              localStorage.setItem('grocericatoken', err.error.token);
+              this.router.navigate(['/socialSignUp']);
+            } else {
+              this.alert.presentToast('Unable to login, please try again');
+            }
+          }
+        );
         this.userData = result;
       })
 
       .catch(err => {
+        loading.dismiss();
+        console.log('GOOGLE LOGIN FAILED: --> ', err);
         this.userData = `Error ${JSON.stringify(err)}`;
         const mes = 'Something went wrong';
         this.alert.presentToast(mes);

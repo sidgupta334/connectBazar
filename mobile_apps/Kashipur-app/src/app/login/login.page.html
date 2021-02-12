@@ -15,15 +15,13 @@ object-fit: cover;" />
             <ion-icon slot="start" src="../../assets/search.svg"></ion-icon>
             LOGIN WITH GOOGLE</ion-button>
         <div class="flex-container">
-            <span>------ </span>
+            <br><br><br>
             <span>OR</span>
-            <span> ------</span>
+            <br><br>
         </div>
-        <div style="word-break: break-word">{{socialAccount}}</div>
         <ion-card>
             <ion-grid>
-                <!-- <form [formGroup]="LoginForm" (ngSubmit)="login(LoginForm.value)"> -->
-                <form [formGroup]="LoginForm" (ngSubmit)="googleSignIn()">
+                <form [formGroup]="LoginForm" (ngSubmit)="login(LoginForm.value)">
                     <ion-row>
                         <ion-col class="ion-float-left" style="border-bottom: 1px solid #fff;">
                             <div>

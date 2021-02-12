@@ -8,13 +8,9 @@ ion-item {
     // --border-color: rgba(0,0,0,0)!important;
 }
 
-ion-grid {
-    margin-top: 40px;
-}
-
 ion-card {
     align-items: center;
-    height: 260px;
+    height: 220px;
     background: rgba(196, 196, 196, 0.12);
     border-radius: 15px;
 }
@@ -26,7 +22,6 @@ ion-icon {
 
 ion-input {
     color: white;
-    margin-left: 15px;
 }
 
 ion-button {
@@ -82,4 +77,13 @@ u {
 
 .item-highlight {
     border-bottom: 1px solid #D3D3D3;
+}
+
+.flex-container {
+    display: flex;
+    width: 90%;
+    margin-left: 5%;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }

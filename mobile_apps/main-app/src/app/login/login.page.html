@@ -11,6 +11,14 @@ object-fit: cover;" />
 
         <p class="text">Welcome to Connect Bazar, <br />Let's Sign in</p>
 
+        <ion-button (click)="googleSignIn()" expand="block" style="--background: rgb(155, 0, 0);">
+            <ion-icon slot="start" src="../../assets/search.svg"></ion-icon>
+            LOGIN WITH GOOGLE</ion-button>
+        <div class="flex-container">
+            <br><br><br>
+            <span>OR</span>
+            <br><br>
+        </div>
         <ion-card>
             <ion-grid>
                 <form [formGroup]="LoginForm" (ngSubmit)="login(LoginForm.value)">
@@ -44,7 +52,7 @@ object-fit: cover;" />
                         </ion-col>
                     </ion-row>
                     <div class="login-ctr">
-                        <ion-button class="des-button login-btn" type="ngSubmit"> Login</ion-button>
+                        <button [disabled]="LoginForm.invalid" class="button-submit des-button" type="ngSubmit"> Login</button>
                     </div>
                 </form>
             </ion-grid>
