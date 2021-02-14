@@ -124,7 +124,7 @@ export class ViewOrderPage implements OnInit {
       this.isOrderLoaded = true;
       this.viewOrder = res;
       
-      this.viewOrder.discountReceived = this.viewOrder.oldTotal - (this.viewOrder.finalTotal + this.viewOrder.discountApplied);
+      this.viewOrder.discountReceived = this.viewOrder.oldTotal - (this.viewOrder.finalTotal + this.viewOrder.discountApplied - this.viewOrder.serviceCharge);
       
       this.viewOrder.netAmount = this.viewOrder.oldTotal - this.viewOrder.discountReceived;
 

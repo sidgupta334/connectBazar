@@ -92,13 +92,16 @@
         <ion-col size="6" id="order-value">₹ {{viewOrder?.oldTotal}}</ion-col>
 
         <ion-col size="6">Discount received from us</ion-col>
-        <ion-col size="6" id="order-value" style="color: #cabe1c;">₹ {{ viewOrder?.discountReceived}}</ion-col>
+        <ion-col size="6" id="order-value" style="color: #cabe1c;"> - ₹ {{ viewOrder?.discountReceived}}</ion-col>
 
         <ion-col size="6">Net Amount</ion-col>
         <ion-col size="6" id="order-value">₹ {{viewOrder?.netAmount}}</ion-col>
 
         <ion-col size="6">Discount Applied</ion-col>
-        <ion-col size="6" id="order-value" style="color: #1FCA1C;">₹ {{viewOrder?.discountApplied}}</ion-col>
+        <ion-col size="6" id="order-value" style="color: #1FCA1C;"> - ₹ {{viewOrder?.discountApplied}}</ion-col>
+
+        <ion-col size="6">Service Charge</ion-col>
+        <ion-col size="6" id="order-value"> + ₹ {{viewOrder?.serviceCharge}}</ion-col>
 
         <ion-col size="6" style="font-weight: bold;">Final Amount</ion-col>
         <ion-col size="6" style="font-weight: bold;" id="order-value">₹ {{viewOrder?.finalTotal}}</ion-col>
