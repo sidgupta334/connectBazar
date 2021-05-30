@@ -16,43 +16,43 @@ export class ProductPage implements OnInit {
   addedButton: boolean;
   token: string;
   showButton: boolean;
-  constructor(public modalController: ModalController , private common: CommomService ,
-              private cartApi: CartService) { }
+  constructor(
+    public modalController: ModalController,
+    private common: CommomService,
+    private cartApi: CartService
+  ) {}
 
   ngOnInit() {
     this.product = JSON.parse(localStorage.getItem('grocericaProduct'));
-    let p = this.cartApi.viewCart();p.subscribe(res =>{console.log('responnnse',res);this.quantity=res.netQuantity});
-    console.log(this.product);
-
+    let p = this.cartApi.viewCart();
+    p.subscribe(res => {
+      this.quantity = res.netQuantity;
+    });
+    
     this.token = localStorage.getItem('grocericatoken');
-    console.log(this.token);  
     if (this.token == null) {
       this.showButton = true;
       this.addedButton = false;
       this.addCartButton = false;
+    }
   }
-}
 
   openModal() {
-  this.common.openModal();
-}
+    this.common.openModal();
+  }
 
-get getDiscount() {
-  const discount = this.product.oldPrice - this.product.newPrice;
-  return discount ? Math.round((discount/this.product.oldPrice) * 100) : 0;
-}
+  get getDiscount() {
+    const discount = this.product.oldPrice - this.product.newPrice;
+    return discount ? Math.round((discount / this.product.oldPrice) * 100) : 0;
+  }
 
-addToCart(product) {
-  console.log(product);
-  const a = this.cartApi.addToCart(product.productId);
-  a.subscribe( res => {
-    console.log(res);
-    this.addedButton = true;
-    this.addCartButton = false;
-    localStorage.setItem('grocericaQuantity', res.netQuantity);
-    this.quantity = localStorage.getItem('grocericaQuantity');
-  });
-
-}
-
+  addToCart(product) {
+    const a = this.cartApi.addToCart(product.productId);
+    a.subscribe(res => {
+      this.addedButton = true;
+      this.addCartButton = false;
+      localStorage.setItem('grocericaQuantity', res.netQuantity);
+      this.quantity = localStorage.getItem('grocericaQuantity');
+    });
+  }
 }

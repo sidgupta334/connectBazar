@@ -49,10 +49,6 @@
     "cordova-plugin-androidx-adapter": {
       "PACKAGE_NAME": "io.ionic.starter"
     },
-    "cordova-plugin-googleplus": {
-      "PLAY_SERVICES_VERSION": "15.0.1",
-      "PACKAGE_NAME": "io.ionic.starter"
-    },
     "cordova-plugin-android-permissions": {
       "PACKAGE_NAME": "io.ionic.starter"
     },
@@ -61,6 +57,10 @@
       "PACKAGE_NAME": "io.ionic.starter"
     },
     "phonegap-plugin-mobile-accessibility": {
+      "PACKAGE_NAME": "io.ionic.CaringMother"
+    },
+    "cordova-plugin-googleplus": {
+      "PLAY_SERVICES_VERSION": "15.0.1",
       "PACKAGE_NAME": "io.ionic.CaringMother"
     }
   },

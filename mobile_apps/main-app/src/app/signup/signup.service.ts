@@ -14,8 +14,6 @@ export class SignupService {
 
 
   registerUser(value) {
-    console.log(value.user)
-    console.log('gender'+value.gender)
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
 

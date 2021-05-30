@@ -41,10 +41,9 @@ export class ViewOrderPage implements OnInit {
   }
 
   particularProductAccess() {
-    // call a particular product api call
 
+    // call a particular product api call
     if (this.viewOrder.orderStatus === 'COMPLETED') {
-      console.log('Hellll');
       this.getReview(this.viewOrder.orderId);
     }
 
@@ -56,13 +55,10 @@ export class ViewOrderPage implements OnInit {
       // calc the discount on each product
       this.totalvalue = this.viewOrder.products[i].total + this.totalvalue;
     }
-    console.log('total order value' + this.totalvalue);
   }
 
   // method to cancel the order
   async cancelOrder(item) {
-    console.log(item);
-
     const loading = await this.loadingController.create({
       message: 'Please wait...',
     });
@@ -71,7 +67,6 @@ export class ViewOrderPage implements OnInit {
     const p = this.orderApi.cancelOrder(item);
     p.subscribe(
       async res => {
-        console.log(res);
         loading.dismiss();
         localStorage.setItem('grocericaViewCart', JSON.stringify(res));
         const mes = 'Your order is successfully cancelled';
@@ -87,39 +82,38 @@ export class ViewOrderPage implements OnInit {
   }
 
   review(item) {
-    console.log(item);
     localStorage.setItem('reviewProduct', JSON.stringify(item));
     this.router.navigate(['/rating']);
   }
 
   async getReview(orderId) {
-    console.log('review');
     const loading = await this.loadingController.create({
       message: 'Please wait...',
     });
 
     loading.present();
-    
+
     const p = this.api.getFeedback(orderId);
     p.subscribe(res => {
       loading.dismiss();
-      console.log(res);
       this.feedback = res;
       this.viewRate = false;
+    },
+    err => {
+      loading.dismiss();
     });
   }
 
   viewFeedback(order) {
     const feedbackOrder = Object.assign(this.feedback, order);
-    console.log(feedbackOrder);
     localStorage.setItem('viewFeedback', JSON.stringify(feedbackOrder));
     this.router.navigate(['/feedback']);
   }
 
   async ionViewWillEnter() {
+    this.quantity = localStorage.getItem('grocericaQuantity');
     this.Activatedroute.paramMap.subscribe(params => {
       this.id = params.get('id');
-      console.log(this.id);
     });
 
     let p = this.orderApi.particularOrder(this.id);
@@ -128,23 +122,26 @@ export class ViewOrderPage implements OnInit {
     });
 
     loading.present();
-    p.subscribe(res => {
-      loading.dismiss();
-      this.isOrderLoaded = true;
-      console.log('particular product', res);
-      this.viewOrder = res;
-      
-      this.viewOrder.discountReceived = this.viewOrder.oldTotal - (this.viewOrder.finalTotal + this.viewOrder.discountApplied);
-      
-      this.viewOrder.netAmount = this.viewOrder.oldTotal - this.viewOrder.discountReceived;
+    p.subscribe(
+      res => {
+        loading.dismiss();
+        this.isOrderLoaded = true;
+        this.viewOrder = res;
 
-      
-      if (this.viewOrder) {
-        this.particularProductAccess();
+        this.viewOrder.discountReceived =
+          this.viewOrder.oldTotal -
+          (this.viewOrder.finalTotal + this.viewOrder.discountApplied);
+
+        this.viewOrder.netAmount =
+          this.viewOrder.oldTotal - this.viewOrder.discountReceived;
+        if (this.viewOrder) {
+          this.particularProductAccess();
+        }
+      },
+      err => {
+        loading.dismiss();
       }
-    }, err => {
-      loading.dismiss();
-    });
+    );
   }
 
   calculateDiscountReceived(order) {

@@ -34,7 +34,6 @@ export class CartService {
   }
 
   applyPromoCade(value) {
-    console.log(value);
     var headers = new HttpHeaders();
     headers = headers.set('token', localStorage.getItem('grocericatoken'));
     let param ={
@@ -48,8 +47,6 @@ export class CartService {
 
 
   placeOrder(addressId,finalTotal,safeDelivery,paymentType, couponApplied) {
-    console.log(addressId); 
-    console.log('payment type in service' +paymentType); 
     var headers = new HttpHeaders();
     headers = headers.set('token', localStorage.getItem('grocericatoken'));
 

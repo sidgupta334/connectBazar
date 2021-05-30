@@ -33,7 +33,6 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     window.addEventListener('online', () => {
-      console.log('online');
       this.router.navigateByUrl('/no-internet', { skipLocationChange: true }).then(() => {
         this.router.navigate(['/home']);
     });
@@ -42,11 +41,9 @@ export class HomePage implements OnInit {
 
   doRefresh(event) { // refresh function
   this.getOrderList();
-  console.log('refresh');
   setTimeout(() => {
-      console.log('Async operation has ended');
       event.target.complete();
-    }, 2000);
+    }, 500);
   }
 
 
@@ -57,15 +54,12 @@ export class HomePage implements OnInit {
     });
     const p = this.homePageApi.getOpenOrderList();
     p.subscribe(res => {
-      console.log(res);
       this.orderList = res;
       //method to sort in ascending order
       this.orderList.sort((a, b) => parseFloat(a.orderId) - parseFloat(b.orderId));
-      console.log('sort', this.orderList);
-
+      
             // get the status of cancelled
       for (let i = 0; i < this.orderList.length; i++) {
-        console.log('bye');
         if (this.orderList[i].orderStatus === 'CANCELLED_COD' || this.orderList[i].orderStatus === 'CANCELLED_ONLINE' ) {
            this.orderList[i].orderStatus = 'CANCELLED';
               }
@@ -87,7 +81,6 @@ export class HomePage implements OnInit {
         this.router.navigate(['/no-internet']);
 
       }
-      console.log(error);
     });
   }
 
@@ -98,13 +91,11 @@ export class HomePage implements OnInit {
   }
 
 viewParticularOrder(item) {
-  console.log(item.orderId);
   localStorage.setItem('vendorViewCart', JSON.stringify(item.orderId));
   this.router.navigate(['/order']);
 }
 
 async logout() {
-  console.log('logout');
   this.commom.logout();
 }
 

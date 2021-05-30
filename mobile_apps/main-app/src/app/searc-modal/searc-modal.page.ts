@@ -54,6 +54,7 @@ export class SearcModalPage implements OnInit {
 
   particularProduct(product) {
     localStorage.setItem('grocericaProduct', JSON.stringify(product));
+    this.viewCtrl.dismiss();
     this.common.closeModal();
     this.router.navigate(['/product']);
   }
@@ -159,9 +160,13 @@ export class SearcModalPage implements OnInit {
         this.updateCart('+');
       },
       async error => {
-        if (error.status == 500) {
           await loading.dismiss();
+        if (error.status == 500) {
           this.common.presentToast('Unable to add product');
+        } else if (error.status === 401) {
+          this.common.presentToast('Session expired, please login again');
+          this.viewCtrl.dismiss();
+          this.router.navigate(['/login']);
         }
       }
     );
@@ -205,7 +210,12 @@ export class SearcModalPage implements OnInit {
           }
         }
         if (this.removeCart.netQuantity === 0) {
+          this.productList.forEach(product => {
+            delete product.quantity;
+            product.visible = true;
+          });
           // condition when cart gets empty
+          // this.quantity = 0;
         }
         this.updateCart('-');
       },

@@ -30,6 +30,10 @@ const routes: Routes = [
     loadChildren: () => import('./signup/signup.module').then( m => m.SignupPageModule)
   },
   {
+    path: 'socialSignUp',
+    loadChildren: () => import('./social-sign-up/social-sign-up.module').then( m => m.SocialSignUpPageModule)
+  },
+  {
     path: 'activate-otp',
     loadChildren: () => import('./activate-otp/activate-otp.module').then( m => m.ActivateOtpPageModule)
   },
@@ -89,6 +93,14 @@ const routes: Routes = [
   {
     path: 'feedback',
     loadChildren: () => import('./viewfeedback/viewfeedback.module').then( m => m.ViewfeedbackPageModule)
+  },
+  {
+    path: 'about-us',
+    loadChildren: () => import('./about-us/about-us.module').then( m => m.AboutUsPageModule)
+  },
+  {
+    path: 'contact-us',
+    loadChildren: () => import('./contact-us/contact-us.module').then( m => m.ContactUsPageModule)
   },
 ];
 

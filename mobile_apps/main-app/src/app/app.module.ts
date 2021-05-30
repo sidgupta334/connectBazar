@@ -22,6 +22,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { MobileAccessibility } from '@ionic-native/mobile-accessibility/ngx';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
@@ -33,7 +34,8 @@ import { MobileAccessibility } from '@ionic-native/mobile-accessibility/ngx';
     IonicModule.forRoot(),
     HttpClientModule,
     AtomSpinnerModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule
   ],
   providers: [
     StatusBar,

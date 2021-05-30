@@ -30,7 +30,6 @@ export class ActivateOtpPage implements OnInit {
 
 
   verifyActivateUserOtp(value) {
-    console.log(value)
     this.validateForm= true;
 
     if(this.ActivateForm.invalid) {
@@ -39,7 +38,6 @@ export class ActivateOtpPage implements OnInit {
 
     const p = this.api.verifyActivateUserOtp(value);
     p.subscribe(res => {
-      console.log(res);
       this.presentAlertConfirm('Account is Activated');
 
 
@@ -54,7 +52,6 @@ export class ActivateOtpPage implements OnInit {
         this.common.presentToast('Something Went Wrong!! Try after sometime');
 
       }
-      console.log(error);
     });
   }
 
@@ -70,12 +67,10 @@ export class ActivateOtpPage implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
-            console.log('Confirm Cancel: blah');
           }
         }, {
           text: 'Okay',
           handler: () => {
-            console.log('Confirm Okay');
             this.router.navigate(['login']);
           }
         }

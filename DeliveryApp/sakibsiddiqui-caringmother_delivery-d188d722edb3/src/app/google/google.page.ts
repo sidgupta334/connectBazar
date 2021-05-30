@@ -36,9 +36,7 @@ export class GooglePage implements OnInit {
     this.geolocation.getCurrentPosition().then((resp) => {
       // this.latitude = resp.coords.latitude;
       // this.longitude = resp.coords.longitude;
-      // console.log(this.latitude);
-      // console.log(this.longitude);
-
+    
       const latLng = new google.maps.LatLng(this.latitude, this.longitude);
       const mapOptions = {
         center: latLng,
@@ -59,12 +57,10 @@ export class GooglePage implements OnInit {
       });
 
     }).catch((error) => {
-      console.log('Error getting location', error);
     });
   }
 
   getAddressFromCoords(lattitude, longitude) {
-    console.log('getAddressFromCoords ' + lattitude + ' ' + longitude);
     const options: NativeGeocoderOptions = {
       useLocale: true,
       maxResults: 5

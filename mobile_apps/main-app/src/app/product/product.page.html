@@ -21,15 +21,16 @@
 
 
     <div>
-        <img [src]="product.url" alt="caring mother" />
+        <img [src]="product.url" class="prd-image" alt="Connect Bazar" />
     </div>
-    <div class="flex-horizontal">
-        <h4 style="margin-left: 10px;font-weight: bold;">{{product.productName}}</h4>
-        <div class="flex-vertical">
-            <label class="class-off-button" id="product-label">{{getDiscount}}% Off</label> <br>
-            <h4 class="base-price"> ₹ {{product.newPrice}}</h4>
+    <div class="flex-vertical">
+        <h4 class="product-name">{{product.productName}}</h4>
+        <label> Product MRP: <del> ₹ {{product.oldPrice}} </del></label>
+        <div class="flex-horizontal">
+            <h5> Selling Price: <span style="font-weight: bolder;"> ₹ {{product.newPrice}} </span></h5>
+            <label class="class-off-button" id="product-label">{{getDiscount}}% Off</label>
         </div>
-    </div> <br><br>
+    </div>
     <div style="display: flex;flex-direction: column;align-items: center;">
         <span class="description-header"> Product Description</span>
         <p class="ProductDescription">
@@ -45,7 +46,7 @@
 
     <div *ngIf="addedButton">
         <ion-button class="cartbutton des-button" routerLink='/cart'>
-            View CART
+            GO TO CART
         </ion-button>
     </div>
 

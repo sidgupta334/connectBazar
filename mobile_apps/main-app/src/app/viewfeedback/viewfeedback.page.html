@@ -1,7 +1,7 @@
 <ion-header>
     <ion-toolbar color="primary" style="height: 60px;">
         <ion-buttons slot="start">
-            <ion-icon name="arrow-back" routerLink="/view-order"></ion-icon>
+            <ion-icon name="arrow-back" routerLink="/view-order/{{feedbackDetails?.orderId}}"></ion-icon>
         </ion-buttons>
         <ion-title>View Your Feedback</ion-title>
     </ion-toolbar>
@@ -52,5 +52,5 @@
     </ion-grid>
 
     <div style="text-align: center;">
-        <ion-button class="button" routerLink="/view-order">Back</ion-button>
+        <ion-button class="button" routerLink="/view-order/{{feedbackDetails?.orderId}}">Back</ion-button>
     </div>

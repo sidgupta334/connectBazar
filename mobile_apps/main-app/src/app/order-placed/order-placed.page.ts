@@ -14,7 +14,6 @@ export class OrderPlacedPage implements OnInit {
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(params =>{
       this.id = params.get('id');
-      console.log(this.id);
     })
   }
 

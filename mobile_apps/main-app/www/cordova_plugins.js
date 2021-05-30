@@ -130,14 +130,6 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       ]
     },
     {
-      "id": "cordova-plugin-googleplus.GooglePlus",
-      "file": "plugins/cordova-plugin-googleplus/www/GooglePlus.js",
-      "pluginId": "cordova-plugin-googleplus",
-      "clobbers": [
-        "window.plugins.googleplus"
-      ]
-    },
-    {
       "id": "cordova-plugin-android-permissions.Permissions",
       "file": "plugins/cordova-plugin-android-permissions/www/permissions.js",
       "pluginId": "cordova-plugin-android-permissions",
@@ -168,6 +160,14 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       "clobbers": [
         "MobileAccessibilityNotifications"
       ]
+    },
+    {
+      "id": "cordova-plugin-googleplus.GooglePlus",
+      "file": "plugins/cordova-plugin-googleplus/www/GooglePlus.js",
+      "pluginId": "cordova-plugin-googleplus",
+      "clobbers": [
+        "window.plugins.googleplus"
+      ]
     }
   ];
   module.exports.metadata = {
@@ -187,9 +187,9 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     "cordova-plugin-local-notification": "0.9.0-beta.2",
     "cordova-plugin-androidx": "2.0.0",
     "cordova-plugin-androidx-adapter": "1.1.1",
-    "cordova-plugin-googleplus": "8.5.0",
     "cordova-plugin-android-permissions": "1.1.0",
     "cordova-plugin-request-location-accuracy": "2.3.0",
-    "phonegap-plugin-mobile-accessibility": "1.0.5-dev"
+    "phonegap-plugin-mobile-accessibility": "1.0.5-dev",
+    "cordova-plugin-googleplus": "8.5.2"
   };
 });

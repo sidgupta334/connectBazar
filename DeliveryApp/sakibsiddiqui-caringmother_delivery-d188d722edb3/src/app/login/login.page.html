@@ -1,62 +1,61 @@
-
-
-<img src="../../assets/login.png" alt="caring mother" style="    
+<img src="../../assets/login.png" alt="Connect Bazar" style="    
 background-color: rgb(6, 15, 66);
-object-fit: cover;"  />
+object-fit: cover;" />
 
 
-    <ion-content class="background" >
-  
-  <div>
-    <img src="../../assets/icon.png" alt="caring mother" class="login" />
 
-    <p class="text">Welcome to Caring Mother, <br />Let's Sign in</p>
+<ion-content class="background">
 
-    <ion-card>
-      <ion-grid>
-        <form [formGroup]="LoginForm" (ngSubmit)="login(LoginForm.value)">
-          <ion-row>
-            <ion-col class="ion-float-left">
-              <div>
-                <ion-item style="background-color: transparent;">
-                  <ion-label position="fixed" style="color: #919090;">User Name</ion-label>
-                  <ion-input formControlName="email"></ion-input>
-                </ion-item>
-                <div id="errorStyle" *ngIf="formValidation && f.email.errors" class="invalid-feedback">
-                  <div *ngIf="f.email.errors.required">*Email is required</div>
-                  <div *ngIf="f.email.errors.email" >Enter valid *email</div>
-              </div>
-              </div>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col class="ion-float-right">
-              <div>
-                <ion-item>
-                  <ion-label position="fixed" style="color: #919090;">
-                    Password</ion-label>
-                  <ion-input type="password" formControlName="password">
-                  </ion-input>
-                </ion-item>
-                <div id="errorStyle" *ngIf="formValidation && f.password.errors" class="invalid-feedback">
-                  <div *ngIf="f.password.errors.required">*Password is required</div>
-              </div>
-              </div>
-            </ion-col>
-          </ion-row>
+    <div>
+        <img src="../../assets/icon.png" alt="Connect Bazar" class="login" />
 
-          <ion-button color="primary" type="ngSubmit"> Login</ion-button>
-        </form>
-      </ion-grid>
-    </ion-card>
-  </div>
+        <p class="text">Welcome to Connect Bazar, <br />Vendor App</p>
 
-  <ion-row>
-    <ion-col>
-      <p routerLink="/forgotpassord" style="text-align: start; color: white;font-size: 15px;text-align: end; margin-right: 15px;">
-        <u>Forgot password?</u>
-      </p>
-    </ion-col>
-  </ion-row>
+        <ion-card>
+            <ion-grid>
+                <form [formGroup]="LoginForm" (ngSubmit)="login(LoginForm.value)">
+                    <ion-row>
+                        <ion-col class="ion-float-left">
+                            <div>
+                                <ion-item style="background-color: transparent;">
+                                    <ion-label position="fixed" style="color: #919090;">User Name</ion-label>
+                                    <ion-input formControlName="email"></ion-input>
+                                </ion-item>
+                                <div id="errorStyle" *ngIf="formValidation && f.email.errors" class="invalid-feedback">
+                                    <div *ngIf="f.email.errors.required">*Email is required</div>
+                                    <div *ngIf="f.email.errors.email">Enter valid *email</div>
+                                </div>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col class="ion-float-right">
+                            <div>
+                                <ion-item>
+                                    <ion-label position="fixed" style="color: #919090;">
+                                        Password</ion-label>
+                                    <ion-input type="password" formControlName="password">
+                                    </ion-input>
+                                </ion-item>
+                                <div id="errorStyle" *ngIf="formValidation && f.password.errors" class="invalid-feedback">
+                                    <div *ngIf="f.password.errors.required">*Password is required</div>
+                                </div>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+
+                    <ion-button color="primary" type="ngSubmit"> Login</ion-button>
+                </form>
+            </ion-grid>
+        </ion-card>
+    </div>
+
+    <ion-row>
+        <ion-col>
+            <p routerLink="/forgotpassord" style="text-align: start; color: white;font-size: 15px;text-align: end; margin-right: 15px;">
+                <u>Forgot password?</u>
+            </p>
+        </ion-col>
+    </ion-row>
 
 </ion-content>

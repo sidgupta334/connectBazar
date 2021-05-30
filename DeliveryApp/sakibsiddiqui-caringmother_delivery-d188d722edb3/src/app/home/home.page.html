@@ -1,68 +1,68 @@
-<ion-header> 
-  <ion-toolbar color="tertiary">
-    <ion-buttons slot="start">
-      <ion-menu-button style="font-size:44px;margin-top: -6px;"></ion-menu-button>
-    </ion-buttons>
-    <ion-title class="home-ion-title">CARING MOTHER</ion-title>
+<ion-header>
+    <ion-toolbar color="tertiary">
+        <ion-buttons slot="start">
+            <ion-menu-button style="font-size:44px;margin-top: -6px;"></ion-menu-button>
+        </ion-buttons>
+        <ion-title class="home-ion-title">Connect Bazar</ion-title>
 
-    <ion-buttons slot="end">
-      <ion-button (click)="logout()">
-        <ion-icon name="power" style="font-size: 38px;"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
+        <ion-buttons slot="end">
+            <ion-button (click)="logout()">
+                <ion-icon name="power" style="font-size: 38px;"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content class="background">
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content>
-    </ion-refresher-content>
-  </ion-refresher>
-  <ion-row > 
-    <ion-col style="border-bottom: 1px solid #C6C6C6;margin-bottom:30px;"></ion-col>
-    <ion-col> <h1 style="color: #C6C6C6;text-align: center;">ORDERS</h1></ion-col>
-    <ion-col style="border-bottom: 1px solid #C6C6C6;margin-bottom:30px;"></ion-col>
-   
-  </ion-row>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content>
+        </ion-refresher-content>
+    </ion-refresher>
+    <ion-row>
+        <ion-col style="border-bottom: 1px solid #C6C6C6;margin-bottom:30px;"></ion-col>
+        <ion-col>
+            <h1 style="color: #C6C6C6;text-align: center;">ORDERS</h1>
+        </ion-col>
+        <ion-col style="border-bottom: 1px solid #C6C6C6;margin-bottom:30px;"></ion-col>
 
-
-  <ion-card *ngFor="let item of orderList">
-
-    <ion-grid>
-      <ion-row class="order-row">
-        <ion-col class="order-col" style="font-weight: lighter;">Order Id: <span style="font-weight: bolder;">{{item.orderId}}</span></ion-col>
-      </ion-row>
-  
-      <ion-row class="order-title">
-        <ion-col size="6">Order Date</ion-col>
-        <ion-col size="6" id="order-value">{{item.orderDate}}</ion-col>
-        <ion-col size="6">Order Status</ion-col>
-        <ion-col size="6" id="order-value" style="color: #1FCA1C;">{{item.orderStatus}}</ion-col>
-        <ion-col size="6">Item Count</ion-col>
-        <ion-col size="6" id="order-value">{{item.netQuantity}}</ion-col>
-      </ion-row>
-    </ion-grid>
-  
-    <ion-row class="order-Final-title">
-      <ion-col size="6">Total Amount</ion-col>
-      <ion-col size="6" id="order-value">₹ {{item.oldTotal}}</ion-col>
     </ion-row>
 
-    <ion-button color="primary" class="button" (click)= "viewParticularOrder(item)">View Order</ion-button>
-  </ion-card>
+
+    <ion-card *ngFor="let item of orderList">
+
+        <ion-grid>
+            <ion-row class="order-row">
+                <ion-col class="order-col" style="font-weight: lighter;">Order Id: <span style="font-weight: bolder;">{{item.orderId}}</span></ion-col>
+            </ion-row>
+
+            <ion-row class="order-title">
+                <ion-col size="6">Order Date</ion-col>
+                <ion-col size="6" id="order-value">{{item.orderDate}}</ion-col>
+                <ion-col size="6">Order Status</ion-col>
+                <ion-col size="6" id="order-value" style="color: #1FCA1C;">{{item.orderStatus}}</ion-col>
+                <ion-col size="6">Item Count</ion-col>
+                <ion-col size="6" id="order-value">{{item.netQuantity}}</ion-col>
+            </ion-row>
+        </ion-grid>
+
+        <ion-row class="order-Final-title">
+            <ion-col size="6">Total Amount</ion-col>
+            <ion-col size="6" id="order-value">₹ {{item.oldTotal}}</ion-col>
+        </ion-row>
+
+        <ion-button color="primary" class="button" (click)="viewParticularOrder(item)">View Order</ion-button>
+    </ion-card>
 
 
-  <ion-row > 
-    <ng-container *ngIf="showNoOrder">
-    <ion-col>
-      <ion-card>
-        <p>No Orders Available</p>
-      </ion-card>
-    </ion-col>
+    <ion-row>
+        <ng-container *ngIf="showNoOrder">
+            <ion-col>
+                <ion-card>
+                    <p>No Orders Available</p>
+                </ion-card>
+            </ion-col>
 
-  </ng-container>
-</ion-row>
+        </ng-container>
+    </ion-row>
 
 </ion-content>
-
-

@@ -19,7 +19,7 @@ ion-title {
     font-family: OpenSans-Light;
     margin-top: 10px;
     padding-bottom: 10px;
-    border-bottom: 2px solid aquamarine;
+    border-bottom: 2px solid rgb(47, 131, 226);
 }
 
 .order-col {
@@ -36,7 +36,8 @@ ion-title {
     font-weight: bold;
     padding-left: 15px;
     padding-top: 6px;
-    border-bottom: 2px solid aquamarine;
+    border-bottom: 2px solid rgb(47, 131, 226);
+    padding-bottom: 10px;
 }
 
 #order-value {

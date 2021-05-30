@@ -19,13 +19,6 @@ export class ProfileService {
   
 
   updateProfile(value) {
-    console.log(value);
-    console.log(value.dob);
-    console.log(value.email);
-    console.log(value.name);
-    console.log(value.gender);
-    console.log(value.mobile);
-    console.log(value.userId);
     var headers = new HttpHeaders();
     headers = headers.set('token', localStorage.getItem('grocericaVendortoken'));
     const param = {

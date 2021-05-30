@@ -29,14 +29,11 @@ export class AppComponent implements OnInit {
     { title: 'My Profile', url: '/profile', icon: 'person' },
     { title: 'Completed Orders', url: '/closed-order', icon: 'copy' },
     { title: 'Logout', url: '/home', icon: 'log-out' },
-    { title: 'About Us', url: '/home', icon: 'people' },
   ];
 
   public appNoAuthPages = [
     { title: 'Main Menu', url: '/home', icon: 'grid' },
     { title: 'Login', url: '/login', icon: 'log-out' },
-    { title: 'About Us', url: '/home', icon: 'people' },
-
   ];
 
   constructor(
@@ -88,17 +85,13 @@ export class AppComponent implements OnInit {
   ngOnInit() {
  this.user = localStorage.getItem('user');
  this.noAuth = localStorage.getItem('grocericaVendortoken');
- console.log(this.noAuth);
- console.log(typeof(this.noAuth));
-
+ 
  if (this.noAuth === null ) {
-  console.log('I am nullllll');
   localStorage.setItem('grocericaQuantity', '0');
   this.show = false;
   this.noAuthshow = true;
   }
  if (typeof(this.noAuth) === 'undefined' ) {
-    console.log('I am undefined');
     localStorage.setItem('grocericaQuantity', '0');
     this.show = false;
     this.noAuthshow = true;
@@ -107,12 +100,10 @@ export class AppComponent implements OnInit {
  if (this.noAuth) {
     this.show = true;
     this.noAuthshow = false;
-    console.log('i just logged in');
   }
   }
 
   toggle(i) {
-    console.log(i);
     if (i == 'Logout') {
         this.logout();
     }
@@ -122,14 +113,12 @@ export class AppComponent implements OnInit {
 
 
   async logout() {
-    console.log('logout');
     this.common.logout();
   }
 
 
   exitApp() {
     this.platform.backButton.subscribeWithPriority(10, (processNextHandler) => {
-      console.log('Back press handler!');
       if (this._location.isCurrentPathEqualTo('/home') && (localStorage.getItem('googlemap') === 'map') ) {
         this.viewCtrl.dismiss();
         localStorage.removeItem('googlemap');
@@ -139,9 +128,7 @@ export class AppComponent implements OnInit {
         processNextHandler();
       } 
       else {
-
         // Navigate to back page
-        console.log('Navigate to back page');
         this._location.back();
 
       }
@@ -149,14 +136,11 @@ export class AppComponent implements OnInit {
     });
 
     this.platform.backButton.subscribeWithPriority(5, () => {
-      console.log('Handler called to force close!');
       this.alert.getTop().then(r => {
         if (r) {
-          console.log(r);
           navigator['app'].exitApp();
         }
       }).catch(e => {
-        console.log(e);
       })
     });
   }
@@ -172,7 +156,6 @@ export class AppComponent implements OnInit {
         text: 'Stay',
         role: 'cancel',
         handler: () => {
-          console.log('Application exit prevented!');
         }
       }, {
         text: 'Exit',

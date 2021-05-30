@@ -12,7 +12,6 @@ export class NoInternetPage implements OnInit {
 
   ngOnInit() {
     window.addEventListener('online', () => {
-      console.log('online in no-internet');
         this.router.navigate(['/home']);
     });
 

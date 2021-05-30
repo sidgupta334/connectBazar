@@ -22,30 +22,47 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content class="background">
+<div *ngIf="homeMsg" class="NoProduct">
+    <img src="../../assets/warning.svg" width="200" alt="Warning">
+    <p> SOMETHING WENT WRONG! </p>
+</div>
+
+<ion-content *ngIf="subCategoriesMapping.length" class="background">
 
     <ion-slides [options]="slideOptions" pager="true" #slider (ionSlidesDidLoad)="slidesDidLoad(slider)">
         <ion-slide *ngFor="let item of bannerImage">
-            <img class="slider-image" [src]="item.url" alt="caring mother" />
+            <img class="slider-image" [src]="item.url" alt="Connect Bazar" />
         </ion-slide>
 
     </ion-slides>
     <br>
     <div class="flex-horizontal">
         <img style="margin: 5px 10px" src="../../assets/list.png" width="40" alt="Connect Bazar" />
-        <div class="categories-header">Shops</div>
+        <div class="categories-header">Categories</div>
     </div>
 
+    <ion-grid class="categories-container">
+        <mat-accordion multi>
+            <mat-expansion-panel *ngFor="let item of subCategoriesMapping; let i = index" hideToggle="true">
+                <mat-expansion-panel-header>
+                    <ion-row (click)="toggleAccordion(item)" class="category-card">
+                        <img class="category-image" [src]="item.url" alt="Connect Bazar" />
+                        <p class="category-text ion-text-end">{{item.categoryName}}</p>
+                        <ion-icon [ngClass]="{'is-opened': item.isOpened, 'is-closed' : !item.isOpened }" name="chevron-down-circle-outline" class="drop-down-icon"></ion-icon>
 
-    <ion-grid style="margin-left: 6px;">
-        <ion-row>
-            <ion-col class="category-card" size="5.6" (click)="categoryList(item)" *ngFor="let item of categoryDescription">
-
-                <img class="category-image" [src]="item.url" alt="caring mother" />
-                <p class="category-text">{{item.categoryName}}</p>
-            </ion-col>
-
-        </ion-row>
+                    </ion-row>
+                </mat-expansion-panel-header>
+                <ion-grid class="sub-categories-container">
+                    <ion-row (click)="subCategoryList(subCategory)" class="sub-category-card" *ngFor="let subCategory of item.subCategories">
+                        <img class="sub-category-image" [src]="subCategory.url" alt="Connect Bazar" />
+                        <p class=" sub-category-text">{{subCategory.subCategoryName}}</p>
+                    </ion-row>
+                </ion-grid>
+                <div class="no-items" *ngIf="!item.subCategories.length">
+                    NO ITEMS IN THIS CATEGORY
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
 
     </ion-grid>
 </ion-content>

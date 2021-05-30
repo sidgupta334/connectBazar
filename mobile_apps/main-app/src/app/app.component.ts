@@ -29,14 +29,16 @@ export class AppComponent implements OnInit {
     { title: 'My Orders', url: '/all-order', icon: 'receipt' },
     { title: 'Manage Address', url: '/address', icon: 'location' },
     { title: 'My Profile', url: '/profile', icon: 'person' },
+    { title: 'About Us', url: '/about-us', icon: 'people' },
+    { title: 'Contact Us', url: '/contact-us', icon: 'chatbubble-ellipses' },
     { title: 'Logout', url: '/home', icon: 'log-out' },
-    { title: 'About Us', url: '/home', icon: 'people' },
   ];
 
   public appNoAuthPages = [
     { title: 'Main Menu', url: '/home', icon: 'grid' },
     { title: 'Login', url: '/login', icon: 'log-out' },
-    { title: 'About Us', url: '/home', icon: 'people' },
+    { title: 'Contact Us', url: '/contact-us', icon: 'chatbubble-ellipses' },
+    { title: 'About Us', url: '/about-us', icon: 'people' },
   ];
 
   constructor(
@@ -62,7 +64,6 @@ export class AppComponent implements OnInit {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      console.log('WINDOW -->', window);
       if (this.mobileAccessibility) {
         this.mobileAccessibility.usePreferredTextZoom(false);
       }
@@ -81,9 +82,7 @@ export class AppComponent implements OnInit {
               this.requestGPSPermission();
             }
           },
-          err => {
-            console.log(err);
-          }
+          err => {}
         );
       // this.router.navigate(['/home']);
 
@@ -119,9 +118,6 @@ export class AppComponent implements OnInit {
     this.user = localStorage.getItem('user');
     this.noAuth = localStorage.getItem('grocericatoken');
 
-    console.log(this.noAuth);
-    console.log(typeof this.noAuth);
-
     if (this.noAuth === null) {
       this.show = false;
       this.noAuthshow = true;
@@ -135,19 +131,16 @@ export class AppComponent implements OnInit {
     if (this.noAuth) {
       this.show = true;
       this.noAuthshow = false;
-      console.log('i just logged in');
     }
   }
 
   toggle(i) {
-    console.log(i);
     if (i == 'Logout') {
       this.logout();
     }
   }
 
   async logout() {
-    console.log('logout');
     const alert = await this.alert.create({
       cssClass: 'my-custom-class',
       header: 'Want to logout!',
@@ -157,9 +150,7 @@ export class AppComponent implements OnInit {
           text: 'Cancel',
           role: 'cancel',
           cssClass: 'secondary',
-          handler: blah => {
-            console.log('Confirm Cancel: blah');
-          },
+          handler: blah => {},
         },
         {
           text: 'Okay',
@@ -181,7 +172,7 @@ export class AppComponent implements OnInit {
             localStorage.removeItem('grocericaViewCart');
             localStorage.removeItem('grocericaemail');
             localStorage.removeItem('userIdSignUp');
-       
+
             this.router.navigate(['/login']);
             this.ngOnInit();
           },
@@ -194,32 +185,25 @@ export class AppComponent implements OnInit {
 
   exitApp() {
     this.platform.backButton.subscribeWithPriority(10, processNextHandler => {
-      console.log('Back press handler!');
       if (this._location.isCurrentPathEqualTo('/home')) {
         // Show Exit Alert!
-        console.log('Show Exit Alert!');
         this.showExitConfirm();
         processNextHandler();
       } else {
         // Navigate to back page
-        console.log('Navigate to back page');
         this._location.back();
       }
     });
 
     this.platform.backButton.subscribeWithPriority(5, () => {
-      console.log('Handler called to force close!');
       this.alert
         .getTop()
         .then(r => {
           if (r) {
-            console.log(r);
             navigator['app'].exitApp();
           }
         })
-        .catch(e => {
-          console.log(e);
-        });
+        .catch(e => {});
     });
   }
 
@@ -233,9 +217,7 @@ export class AppComponent implements OnInit {
           {
             text: 'Stay',
             role: 'cancel',
-            handler: () => {
-              console.log('Application exit prevented!');
-            },
+            handler: () => {},
           },
           {
             text: 'Exit',
@@ -267,7 +249,6 @@ export class AppComponent implements OnInit {
       .then(
         () => {
           // When GPS Turned ON call method to get Accurate location coordinates
-          console.log('ask to turn on gps');
         },
         error =>
           console.log(
@@ -279,7 +260,6 @@ export class AppComponent implements OnInit {
   requestGPSPermission() {
     this.locationAccuracy.canRequest().then((canRequest: boolean) => {
       if (canRequest) {
-        console.log('4');
       } else {
         // Show 'GPS Permission Request' dialogue
         this.androidPermissions

@@ -25,6 +25,6 @@ export class ViewfeedbackPage implements OnInit {
       ionViewWillEnter() {
         this.quantity = localStorage.getItem('grocericaQuantity');
         this.feedbackDetails = JSON.parse(localStorage.getItem('viewFeedback'));
-        console.log(this.feedbackDetails);
+        
     }    
 }

@@ -1,3 +1,11 @@
 ion-item {
     --border-color: #fff;
 }
+
+.empty-cart-container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}

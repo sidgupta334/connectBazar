@@ -11,7 +11,8 @@
 <ion-content *ngIf="isOrderLoaded" class="appBackground">
     <ion-grid>
         <ion-row class="order-row">
-            <ion-col class="order-col">Order ID: <span style="font-weight: bold;">{{viewOrder?.orderId}}</span></ion-col>
+            <ion-col class="order-col">Order ID: <span style="font-weight: bold;">{{viewOrder?.orderId}}</span>
+            </ion-col>
         </ion-row>
 
         <ion-row class="order-title">
@@ -20,13 +21,13 @@
             <ion-col size="6">Order Status</ion-col>
             <ion-col *ngIf="viewOrder?.orderStatus=='CANCELLED_COD' || viewOrder?.orderStatus=='CANCELLED_ONLINE'" size="6" id="order-value" style="color: #1FCA1C;">CANCELLED</ion-col>
             <ion-col *ngIf="viewOrder?.orderStatus!=='CANCELLED_COD' && viewOrder?.orderStatus!=='CANCELLED_ONLINE'" size="6" id="order-value" style="color: #1FCA1C;">{{viewOrder?.orderStatus}}</ion-col>
-            <ion-col size="6">Item Count</ion-col>
+            <ion-col size="6">Products Count</ion-col>
             <ion-col size="6" id="order-value">{{viewOrder?.netQuantity}}</ion-col>
         </ion-row>
     </ion-grid>
 
     <ion-row class="order-item">
-        <ion-col class="order-col">ORDER ITEMS :</ion-col>
+        <ion-col class="order-col">ORDERED ITEMS :</ion-col>
     </ion-row>
 
     <ion-card>
@@ -39,7 +40,8 @@
             <ion-col size="6">
                 <p>{{item.productName}} <span>({{item.brand}}) </span> </p>
                 <div style="margin-top: 25px;">
-                    <p><span><del>₹{{item.oldPrice}}</del></span> <span style="margin-left: 15px;"> ₹ {{item.newPrice}} × {{item.quantity}} </span>
+                    <p><span><del>₹{{item.oldPrice}}</del></span> <span style="margin-left: 15px;"> ₹ {{item.newPrice}}
+                            × {{item.quantity}} </span>
                     </p>
                 </div>
             </ion-col>
@@ -49,6 +51,27 @@
             </ion-col>
 
         </ion-row>
+    </ion-card>
+
+    <ion-row class="order-item">
+        <ion-col class="order-col">CANCELLED ITEMS :</ion-col>
+    </ion-row>
+
+    <ion-card>
+        <ion-row *ngFor="let item of viewOrder?.inactiveProducts" style="border-bottom: 1px solid aquamarine;">
+
+            <ion-col size="3">
+                <img [src]="item.url" alt="grocrica" />
+            </ion-col>
+
+            <ion-col size="6">
+                <p>{{item.productName}} <span>({{item.brand}}) </span> </p>
+            </ion-col>
+        </ion-row>
+        <div style="margin-left:20px; margin-right: 20px;">
+            <p> These items are cancelled as they were not available in stocks, we regret for the inconvenience.
+            </p>
+        </div>
     </ion-card>
 
     <ng-container *ngIf="viewRate == true">
@@ -95,10 +118,13 @@
         <ion-col size="6" id="order-value" style="color: #cabe1c;">₹ {{ viewOrder?.discountReceived}}</ion-col>
 
         <ion-col size="6">Net Amount</ion-col>
-        <ion-col size="6" id="order-value">₹ {{viewOrder?.netAmount}}</ion-col>
+        <ion-col size="6" id="order-value">₹ {{viewOrder?.netAmount - viewOrder?.serviceCharge}}</ion-col>
 
         <ion-col size="6">Discount Applied</ion-col>
         <ion-col size="6" id="order-value" style="color: #1FCA1C;">₹ {{viewOrder?.discountApplied}}</ion-col>
+
+        <ion-col size="6">Service Charge</ion-col>
+        <ion-col size="6" id="order-value" style="color: #1FCA1C;">₹ {{viewOrder?.serviceCharge}}</ion-col>
 
         <ion-col size="6" style="font-weight: bold;">Final Amount</ion-col>
         <ion-col size="6" style="font-weight: bold;" id="order-value">₹ {{viewOrder?.finalTotal}}</ion-col>

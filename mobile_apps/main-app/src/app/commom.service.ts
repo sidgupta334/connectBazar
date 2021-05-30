@@ -32,7 +32,6 @@ export class CommomService {
     , {
           text: 'Okay',
           handler: () => {
-            console.log('Okay');
             alert.dismiss(true);
             return false;
           }
@@ -45,7 +44,6 @@ export class CommomService {
 
 
   async openModal() {
-    console.log("hello")
     const modal = await this.modalController.create({
     component: SearcModalPage
     });
@@ -57,8 +55,6 @@ export class CommomService {
   }
 
    scheduleNotification(value) {
-    console.log(value);
-    console.log(value[0].finalTotal);
     this.localNotifications.schedule({
       id: value.orderId,
       title: 'Connect Bazar',

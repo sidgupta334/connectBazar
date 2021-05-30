@@ -35,7 +35,6 @@ export class CommomService {
     , {
           text: 'Okay',
           handler: () => {
-            console.log('Okay');
             alert.dismiss(true);
             return false;
           }
@@ -48,7 +47,6 @@ export class CommomService {
 
     
   async logout() {
-    console.log('logout');
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Want to logout!',
@@ -59,14 +57,12 @@ export class CommomService {
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
-            console.log('Confirm Cancel: blah');
           }
         }, {
           text: 'Okay',
           handler: () => {
             const p = this.api.logout();
             p.subscribe(res => {
-              console.log(res);
               localStorage.removeItem('grocericaVendortoken');
               localStorage.removeItem('userDetail');
               localStorage.removeItem('user');
@@ -85,7 +81,6 @@ export class CommomService {
 
 
   async openModal(lattitude,longitude) {
-    console.log("hello")
     const modal = await this.modalController.create({
     component: GooglePage,
     componentProps: { lat: lattitude , long: longitude }

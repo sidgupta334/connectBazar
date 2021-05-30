@@ -46,14 +46,12 @@ export class RatingPage implements OnInit {
 
 // method to add the rating
   async ratingFormValue(value) {
-console.log(value);
 const loading = await this.loadingController.create({
   message: 'Please wait...'
 });
 loading.present();
 const p = this.api.ratingForm(value, this.productDetails.orderId);
 p.subscribe(async res => {
-  console.log(res);
   await loading.dismiss();
   const mes = 'Your response have been submitted';
   this.common.presentToast(mes);
@@ -63,7 +61,6 @@ p.subscribe(async res => {
 },
   async error => {
   await loading.dismiss();
-  console.log(error);
   const mes = 'Something Went Wrong';
   this.common.presentToast(mes);
 });

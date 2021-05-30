@@ -5,7 +5,8 @@ import { CommomService } from '../commom.service';
 import { CartService } from './cart.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LoadingController } from '@ionic/angular';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+
+const MIN_PURCHASE = 200;
 
 @Component({
   selector: 'app-cart',
@@ -19,6 +20,8 @@ export class CartPage implements OnInit {
   showDiscountMoney: boolean;
   cart: any;
   quantity: any;
+  showCheckoutButton = false;
+  minPurchase = MIN_PURCHASE;
   total: any;
   Promo: FormGroup;
   couponApplied: boolean;
@@ -45,13 +48,17 @@ export class CartPage implements OnInit {
   ) {}
 
   ngOnInit() {
-      this.Promo = this.formbuilder.group({
+    this.Promo = this.formbuilder.group({
       couponName: ['', Validators.required],
     });
   }
 
   openModel() {
     this.common.openModal();
+  }
+
+  checkEnablingCheckoutButton() {
+    this.showCheckoutButton = this.total >= this.minPurchase;
   }
 
   async viewCart(resp: any = null) {
@@ -67,18 +74,18 @@ export class CartPage implements OnInit {
         async res => {
           this.hasGotResponse = true;
           await loading.dismiss();
-          console.log('CART VALUE', res);
           this.cartId = res.cartId;
           this.quantity = res.netQuantity;
-
-          for (let i = 0; i < res.products.length; i++) {
-            // tslint:disable-next-line: max-line-length
-            res.products[i].discountPercentage = Math.round(
-              ((res.products[i].oldPrice - res.products[i].newPrice) /
-                res.products[i].oldPrice) *
-                100
-            );
-            console.log(res.products[i].discountPercentage);
+          localStorage.setItem('grocericaQuantity', this.quantity);
+          if (res.products) {
+            for (let i = 0; i < res.products.length; i++) {
+              // tslint:disable-next-line: max-line-length
+              res.products[i].discountPercentage = Math.round(
+                ((res.products[i].oldPrice - res.products[i].newPrice) /
+                  res.products[i].oldPrice) *
+                  100
+              );
+            }
           }
           this.cart = res.products;
           this.total = res.netTotal;
@@ -90,7 +97,9 @@ export class CartPage implements OnInit {
           if (this.quantity == 0) {
             this.showMsg = true;
             this.showCart = false;
+            localStorage.setItem('grocericaQuantity', this.quantity);
           }
+          this.checkEnablingCheckoutButton();
         },
         async error => {
           await loading.dismiss();
@@ -99,44 +108,42 @@ export class CartPage implements OnInit {
             this.showCart = false;
             // tslint:disable-next-line: align
           }
-          console.log(error);
         }
       );
     } else {
       this.cartId = resp.cartId;
       this.quantity = resp.netQuantity;
-
-      for (let i = 0; i < resp.products.length; i++) {
-        // tslint:disable-next-line: max-line-length
-        resp.products[i].discountPercentage = Math.round(
-          ((resp.products[i].oldPrice - resp.products[i].newPrice) /
-            resp.products[i].oldPrice) *
-            100
-        );
-        console.log(resp.products[i].discountPercentage);
+      localStorage.setItem('grocericaQuantity', this.quantity);
+      if (resp.products) {
+        for (let i = 0; i < resp.products.length; i++) {
+          // tslint:disable-next-line: max-line-length
+          resp.products[i].discountPercentage = Math.round(
+            ((resp.products[i].oldPrice - resp.products[i].newPrice) /
+              resp.products[i].oldPrice) *
+              100
+          );
+        }
       }
-      this.cart = resp.products;
+      this.cart = resp.products || null;
       this.total = resp.netTotal;
       this.couponApplied = false;
       this.couponButtonApplied = false;
       this.couponButton = true;
       this.withoutCoupon = true;
-
+      this.checkEnablingCheckoutButton();
       if (this.quantity == 0) {
         this.showMsg = true;
         this.showCart = false;
+        localStorage.setItem('grocericaQuantity', this.quantity);
       }
     }
-    this.showCart = true;
   }
 
   // method to apply promo code
   async applyPromo(value) {
-    console.log(value);
     value.cartId = this.cartId;
     this.userId = JSON.parse(localStorage.getItem('userDetail'));
     value.userId = this.userId.userId;
-    console.log(this.userId);
     value.amount = this.total;
     this.checkValid = true;
     if (this.Promo.invalid) {
@@ -151,7 +158,6 @@ export class CartPage implements OnInit {
 
     p.subscribe(
       async res => {
-        console.log(res);
         this.oldPrice = res.oldPrice;
         this.updatedPrice = res.updatedPrice;
         localStorage.setItem('updatedprice', this.updatedPrice);
@@ -163,7 +169,6 @@ export class CartPage implements OnInit {
         await loading.dismiss();
       },
       async error => {
-        console.log(error);
         if (error.status == 500) {
           const mes = 'INVALID COUPON';
           this.alert.presentToast(mes);
@@ -183,7 +188,6 @@ export class CartPage implements OnInit {
     const p = this.api.addToCart(items.productId);
     p.subscribe(async res => {
       await loading.dismiss();
-      console.log(res);
       this.viewCart(res);
     });
   }
@@ -197,17 +201,14 @@ export class CartPage implements OnInit {
     const p = this.api.removeFromCart(items.productId);
     p.subscribe(async res => {
       await loading.dismiss();
-      console.log(res);
       this.viewCart(res);
     });
   }
 
   async ionViewWillEnter() {
-    console.log('I am In');
+    this.quantity = localStorage.getItem('grocericaQuantity');
     this.viewCart();
-    console.log(this.quantity);
     this.token = localStorage.getItem('grocericatoken');
-    console.log(this.token);
 
     if (this.quantity == 0 && this.token == null) {
       const alert = await this.common.presentAlertConfirm(
@@ -215,7 +216,6 @@ export class CartPage implements OnInit {
       );
       alert.present();
       alert.onDidDismiss().then(data => {
-        console.log(data);
         if (data.data === true) {
           this.router.navigate(['/login']);
         }

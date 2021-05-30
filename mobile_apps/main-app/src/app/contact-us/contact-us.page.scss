@@ -1,0 +1,30 @@
+.flex-layout {
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    .main-img {
+        margin-bottom: 4vh;
+        margin-top: 2vh;
+        width: 30vw;
+    }
+    .header-text {
+        margin-bottom: 3vh;
+        font-weight: bolder;
+    }
+    .intro-paragraph {
+        margin-bottom: 2vh;
+        margin-left: 2vw;
+    }
+    .company-logo {
+        align-items: flex-end;
+        img {
+            width: 40px;
+        }
+        .team-footer {
+            position: relative;
+            top: -10px;
+        }
+    }
+}

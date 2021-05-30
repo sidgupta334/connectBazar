@@ -62,7 +62,6 @@ export class ModalPage implements OnInit {
     if (this.editAddress) {
       this.editTheAddress(this.editAddress);
     }
-    console.log(this.editAddress);
   }
 
   ngOnInit() {
@@ -113,7 +112,6 @@ export class ModalPage implements OnInit {
       .then(resp => {
         this.latitude = resp.coords.latitude;
         this.longitude = resp.coords.longitude;
-        console.log('loap map response by getcurrent position ', resp);
 
         const latLng = new google.maps.LatLng(
           resp.coords.latitude,
@@ -143,23 +141,18 @@ export class ModalPage implements OnInit {
         });
       })
       .catch(error => {
-        console.log('Error getting location', error);
       });
   }
 
   getAddressFromCoords(lattitude, longitude) {
-    console.log('getAddressFromCoords ' + lattitude + ' ' + longitude);
     const options: NativeGeocoderOptions = {
       useLocale: true,
       maxResults: 2,
     };
-    console.log('Procedding to reverse geo coder');
     this.nativeGeocoder
       .reverseGeocode(lattitude, longitude, options)
       .then((result: NativeGeocoderResult[]) => {
-        console.log('Inside geo coder');
-        console.log('result ', result);
-
+ 
         this.city = result[1].locality;
         this.country = result[1].countryName;
         this.pincode = result[1].postalCode;
@@ -168,7 +161,6 @@ export class ModalPage implements OnInit {
         this.address = '';
         const responseAddress = [];
         for (const [key, value] of Object.entries(result[0])) {
-          console.log('valueeee', value);
           if (value.length > 0) {
             responseAddress.push(value);
           }
@@ -176,7 +168,6 @@ export class ModalPage implements OnInit {
         responseAddress.reverse();
         for (const value of responseAddress) {
           this.address += value + ', ';
-          console.log('response address reverse ', this.address);
         }
         this.address = this.address.slice(0, -2);
       })
@@ -201,12 +192,9 @@ export class ModalPage implements OnInit {
     const p = this.api.registerAddress(value);
     p.subscribe(
       async res => {
-        console.log(res);
         await loading.dismiss();
-        console.log('select address' + this.selecAddress);
-
+    
         if (this.selecAddress == 'CHOOSE') {
-          console.log('hello');
           this.router.navigate(['/choose-address']);
           const mes = 'Address Added Succuessfully';
           this.alert.presentToast(mes);
@@ -219,9 +207,7 @@ export class ModalPage implements OnInit {
         }
       },
       async error => {
-        console.log(error);
         await loading.dismiss();
-        console.log(error);
         if (error.status === 400) {
           const mes = 'Invalid Details';
           this.alert.presentToast(mes);
@@ -241,8 +227,7 @@ export class ModalPage implements OnInit {
   }
 
   editTheAddress(editAddress) {
-    console.log(editAddress);
-
+  
     this.showAddForm = false;
     this.showEditForm = true;
     this.addressId = editAddress.addressId;
@@ -263,17 +248,14 @@ export class ModalPage implements OnInit {
     value.lattitude = JSON.stringify(this.latitude);
     value.longitude = JSON.stringify(this.longitude);
     value.addressId = this.addressId;
-    console.log(value);
     let p = this.api.updateAddress(value);
     p.subscribe(
       res => {
-        console.log(res);
         const mes = 'Addres Updated Succuessfully';
         this.alert.presentToast(mes);
         this.dismiss();
       },
       error => {
-        console.log(error);
         if (error.status == 500) {
           const mes = 'Please Try again later ';
           this.alert.presentToast(mes);

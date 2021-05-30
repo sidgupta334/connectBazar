@@ -25,6 +25,8 @@ export class LoginPage implements OnInit {
   userData: any;
   signupText: boolean = true;
   socialAccount: any;
+  socialMsg: any;
+  apiMsg: any
 
   constructor(
     private fb: FormBuilder,
@@ -141,7 +143,6 @@ export class LoginPage implements OnInit {
       .then(result => {
         loading.dismiss();
         this.socialAccount = JSON.stringify(result);
-        console.log('Result of google login: ', result);
         localStorage.setItem('grocericastart', 'starttoken');
         localStorage.setItem('grocericaemail', result.email);
         localStorage.setItem('user', result.displayName);
@@ -154,6 +155,7 @@ export class LoginPage implements OnInit {
         };
         this.api.loginAsSocial(socialDto).subscribe(
           (res: any) => {
+            
             localStorage.setItem('grocericatoken', res.token);
             this.router.navigate(['/home']);
           },
@@ -174,7 +176,6 @@ export class LoginPage implements OnInit {
 
       .catch(err => {
         loading.dismiss();
-        console.log('GOOGLE LOGIN FAILED: --> ', err);
         this.userData = `Error ${JSON.stringify(err)}`;
         const mes = 'Something went wrong';
         this.alert.presentToast(mes);

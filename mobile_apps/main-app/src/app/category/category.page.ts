@@ -3,10 +3,9 @@ import { UniversalapiService } from '../universalapi.service';
 import { Router } from '@angular/router';
 import { CommomService } from '../commom.service';
 import { CartService } from '../cart/cart.service';
-import { error } from 'protractor';
 import { LoadingController } from '@ionic/angular';
 import { HomePage } from '../home/home.page';
-import { from } from 'rxjs';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-category',
@@ -14,11 +13,12 @@ import { from } from 'rxjs';
   styleUrls: ['./category.page.scss'],
 })
 export class CategoryPage implements OnInit {
-  productList: any; // store list of product
+  productList = null; // store list of product
   category: any;
   cart = [];
   proId: any;
   quantity: any;
+  emptyList = false;
 
   discount: number;
   view: any;
@@ -42,7 +42,6 @@ export class CategoryPage implements OnInit {
     // ======Check Login Condition ======== //
     if (this.noAuth === null) {
       this.show = false;
-      console.log(this.quantity);
     }
     if (typeof this.noAuth === 'undefined') {
       this.show = false;
@@ -52,9 +51,8 @@ export class CategoryPage implements OnInit {
     }
     // ---End----//
 
-    this.viewCart();
+    this.fetchApiData();
     this.quantity = localStorage.getItem('grocericaQuantity');
-    console.log('quantity' + this.quantity);
   }
 
   openModel() {
@@ -63,85 +61,33 @@ export class CategoryPage implements OnInit {
   }
 
   updateCart(updateType) {
-
     this.quantity =
       updateType === '+'
         ? Number(this.quantity) + 1
-        : this.quantity == 0 ? 0 : Number(this.quantity) - 1;
-    
+        : this.quantity == 0
+        ? 0
+        : Number(this.quantity) - 1;
+
     localStorage.setItem('grocericaQuantity', this.quantity);
   }
 
-  async viewCart() {
-    // method to get cart value
+  async fetchApiData() {
+    const categoryId = localStorage.getItem('grocericaCategory');
     const loading = await this.loadingController.create({
       message: 'Please wait...',
     });
     loading.present();
-    const a = this.api.viewCart();
-    a.subscribe(
+    forkJoin([
+      this.api.viewCart(),
+      this.homePageApi.getProducts(categoryId),
+    ]).subscribe(
       async res => {
         await loading.dismiss();
-        this.quantity = res.netQuantity;
-        this.view = res;
-        localStorage.setItem('grocericaQuantity', res.netQuantity);
-        this.quantity = localStorage.getItem('grocericaQuantity');
-        console.log('cart values', this.view);
-        const category = localStorage.getItem('grocericaCategory');
-        this.getProducts(category);
+        this.viewCart(res[0]);
+        this.getProducts(res[1]);
       },
       async error => {
         await loading.dismiss();
-        if (error.status === 500) {
-          console.log('I am here ');
-        }
-      }
-    );
-  }
-
-  async getProducts(id) {
-    // method to get the list of product in a sppecific category
-
-    const loading = await this.loadingController.create({
-      message: 'Please wait...',
-    });
-    loading.present();
-
-    const p = this.homePageApi.getProducts(id);
-    p.subscribe(
-      async res => {
-        await loading.dismiss();
-        this.category = res[0].categoryName;
-        console.log('productList', res);
-        console.log('product list length' + res.length);
-        for (let i = 0; i < res.length; i++) {
-          res[i].discountPercentage = Math.round(
-            ((res[i].oldPrice - res[i].newPrice) / res[i].oldPrice) * 100
-          ); // add discount price
-          this.productList = res; // store product in productList
-        }
-
-        for (let i = 0; i < res.length; i++) {
-          this.productList[i].visible = true; // adding attribute to make Add to cart visible
-
-          if (this.view && this.view?.products) {
-            for (let j = 0; j < this.view.products.length; j++) {
-              // check condition is productID present in both product list and cart
-              if (
-                this.productList[i].productId ===
-                this.view.products[j].productId
-              ) {
-                console.log('true');
-                this.productList[i].visible = false; // make increment and decrement visible
-                this.productList[i].quantity = this.view.products[j].quantity;
-                console.log(this.productList);
-              }
-            }
-          }
-          console.log(this.productList);
-        }
-      },
-      async error => {
         if (error.status === 401) {
           this.router.navigate(['/login']);
           await loading.dismiss();
@@ -151,10 +97,41 @@ export class CategoryPage implements OnInit {
           this.router.navigate(['/no-internet']);
           await loading.dismiss();
         }
-        console.log(error);
-        await loading.dismiss();
       }
     );
+  }
+
+  async viewCart(res) {
+    this.view = res;
+    localStorage.setItem('grocericaQuantity', res.netQuantity);
+    this.quantity = res.netQuantity;
+  }
+
+  async getProducts(res) {
+    this.emptyList = res.length ? false : true;
+    this.category = res.length ? res[0].categoryName : '';
+    for (let i = 0; i < res.length; i++) {
+      res[i].discountPercentage = Math.round(
+        ((res[i].oldPrice - res[i].newPrice) / res[i].oldPrice) * 100
+      ); // add discount price
+      this.productList = res; // store product in productList
+    }
+
+    for (let i = 0; i < res.length; i++) {
+      this.productList[i].visible = true; // adding attribute to make Add to cart visible
+
+      if (this.view && this.view?.products) {
+        for (let j = 0; j < this.view.products.length; j++) {
+          // check condition is productID present in both product list and cart
+          if (
+            this.productList[i].productId === this.view.products[j].productId
+          ) {
+            this.productList[i].visible = false; // make increment and decrement visible
+            this.productList[i].quantity = this.view.products[j].quantity;
+          }
+        }
+      }
+    }
   }
 
   async addToCart(product, index) {
@@ -166,30 +143,26 @@ export class CategoryPage implements OnInit {
     const p = this.api.addToCart(product.productId);
     p.subscribe(
       async res => {
-        console.log(res);
         await loading.dismiss();
         // tslint:disable-next-line: prefer-for-of
         for (let i = 0; i < res.products.length; i++) {
-          console.log('cart list id', res.products[i].productId);
           // tslint:disable-next-line: prefer-for-of
           for (let j = 0; j < this.productList.length; j++) {
             if (res.products[i].productId == this.productList[j].productId) {
-              console.log('same id', res.products[i].productId);
               this.productList[j].visible = false;
               this.productList[j].quantity = res.products[i].quantity;
             }
           }
         }
-        console.log(this.productList);
         this.updateCart('+');
       },
       async error => {
         await loading.dismiss();
-        console.log(error);
-        this.common.presentToast('Unable to add product');
-        if (error.status == 500) {
-          console.log('helll');
+        if(error.status === 401) {
+           this.common.presentToast('Session expired, please login again');
+          this.router.navigate(['/login']);
         }
+        this.common.presentToast('Unable to add product');
       }
     );
   }
@@ -200,23 +173,16 @@ export class CategoryPage implements OnInit {
       message: 'Please wait...',
     });
     loading.present();
-    console.log('items ', items);
     const p = this.api.removeFromCart(items.productId);
     p.subscribe(
       async res => {
         await loading.dismiss();
-        console.log('cart response ', res);
-        // console.log('productList' , this.productList);
         this.removeCart = res; // store cart value
         if (this.removeCart.netQuantity != 0) {
           // check whether cart had value
 
           for (let i = 0; i < this.removeCart.products.length; i++) {
-            console.log(
-              'remove cart length ' + this.removeCart.products.length
-            );
             for (let j = 0; j < this.productList.length; j++) {
-              console.log('product list length ' + this.productList.length);
               // tslint:disable-next-line: align
               if (
                 this.removeCart.products[i].productId ===
@@ -225,7 +191,6 @@ export class CategoryPage implements OnInit {
                 this.productList[j].quantity = this.removeCart.products[
                   i
                 ].quantity;
-                console.log(this.productList);
               }
               // tslint:disable-next-line: max-line-length
               if (
@@ -233,9 +198,7 @@ export class CategoryPage implements OnInit {
                   pro => pro.productId === this.productList[j].productId
                 )
               ) {
-                console.log('Object found inside the array.');
               } else {
-                console.log('Not found ', this.productList[j].productId);
                 this.productList[j].visible = true;
               }
             }
@@ -243,18 +206,16 @@ export class CategoryPage implements OnInit {
         }
         if (this.removeCart.netQuantity === 0) {
           this.productList.forEach(product => {
-              delete product.quantity;
-              product.visible = true;
+            delete product.quantity;
+            product.visible = true;
           });
           // condition when cart gets empty
-          console.log('empty');
           this.quantity = 0;
         }
         this.updateCart('-');
       },
       async error => {
         await loading.dismiss();
-        console.log(error);
         this.common.presentToast('Unable to remove product');
       }
     );

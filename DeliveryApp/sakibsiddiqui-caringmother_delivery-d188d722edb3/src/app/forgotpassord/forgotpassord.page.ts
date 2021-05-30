@@ -61,13 +61,11 @@ export class ForgotpassordPage implements OnInit {
   }
 
   route() {
-    console.log("hello")
     this.otpPost = false;
     this.forgotPassword = true;
   }
 
   async getEmail(value) {
-    console.log(value.Email);
     this.checkValid = true;
     if (this.EmailForm.invalid) {
       return;
@@ -80,8 +78,6 @@ export class ForgotpassordPage implements OnInit {
     const p = this.api.forgotPassword(value.Email);
     p.subscribe(
       (res) => {
-        console.log(res);
-        console.log(value);
         localStorage.setItem('grocericaforgotEmail', value.Email);
         loading.dismiss();
         this.alert.presentToast("Otp Sent Successfully to your email");
@@ -92,7 +88,6 @@ export class ForgotpassordPage implements OnInit {
       },
       (error) => {
         loading.dismiss();
-        console.log(error);
         if (error.error.message === "User not found" && error.status === 400) {
           this.alert.presentToast(error.error.message);
         }
@@ -110,7 +105,6 @@ export class ForgotpassordPage implements OnInit {
       return;
     }
     value.email=localStorage.getItem('grocericaforgotEmail');
-    console.log(value);
     const loading = await this.loadingController.create({
       message: "Please wait...",
     });
@@ -118,12 +112,10 @@ export class ForgotpassordPage implements OnInit {
 
     const p = this.api.postOtp(value);
     p.subscribe((res) => {
-      console.log(res);
       loading.dismiss();
       this.presentAlertConfirm(res.message);
     },
     (error) => {
-      console.log(error);
       loading.dismiss();
       if (error.error.message === "User not found" && error.status === 400) {
         this.alert.presentToast(error.error.message);
@@ -147,12 +139,10 @@ export class ForgotpassordPage implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
-            console.log('Confirm Cancel: blah');
           }
         }, {
           text: 'Okay',
           handler: () => {
-            console.log('Confirm Okay');
             this.router.navigate(['login']);
           }
         }

@@ -41,7 +41,6 @@ export class LoginService {
 // update password
   postOtp(value) {
 
-    console.log(value);
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
 
@@ -58,16 +57,13 @@ export class LoginService {
   activateAccount(userId) {
     this.userId = userId;
     localStorage.setItem('userId', this.userId)
-    console.log(this.userId);
     return this.http.get<any>(this.baseUrl + '/users/trigger/manual/' + userId).pipe(map(res => res));
   }
 
 
   verifyActivateUserOtp(value) {
     
-    console.log(this.userId);
     let user = localStorage.getItem('userId');
-    console.log(user);
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
 
@@ -85,7 +81,6 @@ export class LoginService {
     var headers = new HttpHeaders();
     headers = headers.set('token', localStorage.getItem('grocericaVendortoken'));
   
-    console.log(headers);
     return this.http.get<any>(this.baseUrl + '/delivery/users/logout', {headers}).pipe(map(res => res));
     }
 

@@ -49,8 +49,7 @@ export class SignupPage implements OnInit {
 
   async registerUser(value) {
     value.user = "user";
-    console.log(value);
-
+ 
     this.checkValid = true;
     if (this.SignUpForm.invalid) {
       return;
@@ -63,14 +62,12 @@ export class SignupPage implements OnInit {
 
     p.subscribe(async (res) => {
       await loading.dismiss();
-      console.log(res);
       localStorage.setItem('userIdSignUp',res.userId);
       this.router.navigate(['/activate-otp']);
     },
       // tslint:disable-next-line: no-unused-expression
       async (error: any) => {
         await loading.dismiss();
-        console.log(error);
         if (error.status === 400) {
           await loading.dismiss();
           const mes = 'Invalid Details';
@@ -80,7 +77,6 @@ export class SignupPage implements OnInit {
         }
         await loading.dismiss();
         if (error.status === 500) {
-          console.log("ERR ", error.error.message);
           this.alert.presentToast(error.error.message);
         } 
     });

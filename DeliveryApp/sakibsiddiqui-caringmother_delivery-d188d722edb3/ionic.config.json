@@ -1,7 +1,7 @@
 {
-  "name": "Caring Mother Vendor",
-  "integrations": {
-    "cordova": {}
-  },
-  "type": "angular"
+    "name": "Connect Bazar Vendor",
+    "integrations": {
+        "cordova": {}
+    },
+    "type": "angular"
 }

@@ -159,17 +159,6 @@
     "is_top_level": true,
     "variables": {}
   },
-  "cordova-plugin-googleplus": {
-    "source": {
-      "type": "registry",
-      "id": "cordova-plugin-googleplus"
-    },
-    "is_top_level": true,
-    "variables": {
-      "REVERSED_CLIENT_ID": "io.github.codesilva.loginapp",
-      "WEB_APPLICATION_CLIENT_ID": "617836047197-9lf7nr7t46uaehc8hg495h2m9tp810bi.apps.googleusercontent.com"
-    }
-  },
   "cordova-plugin-android-permissions": {
     "source": {
       "type": "registry",
@@ -193,5 +182,16 @@
     },
     "is_top_level": true,
     "variables": {}
+  },
+  "cordova-plugin-googleplus": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-googleplus"
+    },
+    "is_top_level": true,
+    "variables": {
+      "REVERSED_CLIENT_ID": "io.connectItLabs.ConnectBazar",
+      "WEB_APPLICATION_CLIENT_ID": "466240699521-gdn9hubnnt18rd30or7huenv43h9rbph.apps.googleusercontent.com"
+    }
   }
 }

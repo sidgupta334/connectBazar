@@ -46,12 +46,10 @@ export class ProfilePage implements OnInit {
     let a =this.api.getUserDetails();
     a.subscribe( res => {
       this.user = res;
-      console.log(this.user);
       const a = this.user.fullName;
       this.letter = a.slice(0, 1);
       let b =this.datePipe.transform(this.user.dob, 'yyyy-MM-dd');
       this.user.dob = b;
-      console.log(a);
     });
 
   }
@@ -65,7 +63,6 @@ export class ProfilePage implements OnInit {
       }
 
   async updateAddress(value) {
-    console.log(value);
     value.userId = this.user.userId;
     value.email=this.user.email;
     value.mobile= this.user.mobile;
@@ -80,7 +77,6 @@ export class ProfilePage implements OnInit {
 
     const p = this.api.updateProfile(value);
     p.subscribe(res => {
-      console.log(res);
       if(res) {
         loading.dismiss();
         this.common.presentToast('Profile is updated');
@@ -99,7 +95,6 @@ export class ProfilePage implements OnInit {
 }
 
 async logout() {
-  console.log('logout');
   this.common.logout();
 }
 

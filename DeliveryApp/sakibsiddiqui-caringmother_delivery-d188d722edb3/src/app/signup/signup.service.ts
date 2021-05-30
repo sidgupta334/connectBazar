@@ -14,7 +14,6 @@ export class SignupService {
 
 
   registerUser(value) {
-    console.log(value.user)
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
 

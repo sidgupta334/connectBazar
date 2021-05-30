@@ -52,7 +52,6 @@ export class LoginPage implements OnInit {
 
   // ===================Post method for login================//
   async login(value) {
-    console.log(value);
     this.formValidation = true;
 
     // stop here if form is invalid
@@ -68,7 +67,6 @@ export class LoginPage implements OnInit {
     loading.present();
     p.subscribe(
       async (res) => {
-        console.log(res);
         await loading.dismiss();
 
         localStorage.setItem('grocericaVendortoken', res.token);
@@ -92,12 +90,10 @@ export class LoginPage implements OnInit {
 
           p.subscribe(
             async (res) => {
-              console.log(res);
               await loading.dismiss();
               this.router.navigate(['/activate-otp']);
             },
             (error) => {
-              console.log(error);
             }
           );
         }

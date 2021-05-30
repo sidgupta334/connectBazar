@@ -13,9 +13,12 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/animations": "~9.1.6",
+    "@angular/cdk": "^9.2.4",
     "@angular/common": "~9.1.6",
     "@angular/core": "~9.1.6",
     "@angular/forms": "~9.1.6",
+    "@angular/material": "^9.2.4",
     "@angular/platform-browser": "~9.1.6",
     "@angular/platform-browser-dynamic": "~9.1.6",
     "@angular/router": "~9.1.6",
@@ -24,7 +27,7 @@
     "@ionic-native/date-picker": "^5.28.0",
     "@ionic-native/diagnostic": "^5.22.0-beta-1",
     "@ionic-native/geolocation": "^5.28.0",
-    "@ionic-native/google-plus": "^5.28.0",
+    "@ionic-native/google-plus": "^5.31.1",
     "@ionic-native/keyboard": "^5.28.0",
     "@ionic-native/local-notifications": "^5.28.0",
     "@ionic-native/location-accuracy": "^5.28.0",
@@ -47,7 +50,7 @@
     "cordova-plugin-badge": "^0.8.8",
     "cordova-plugin-datepicker": "^0.9.3",
     "cordova-plugin-geolocation": "^4.0.2",
-    "cordova-plugin-googleplus": "^8.5.0",
+    "cordova-plugin-googleplus": "^8.5.2",
     "cordova-plugin-ionic-webview": "^5.0.0",
     "cordova-plugin-local-notification": "^0.9.0-beta.2",
     "cordova-plugin-nativegeocoder": "^3.4.1",
@@ -109,14 +112,14 @@
       "cordova-plugin-local-notification": {},
       "cordova-plugin-androidx": {},
       "cordova-plugin-androidx-adapter": {},
-      "cordova-plugin-googleplus": {
-        "REVERSED_CLIENT_ID": "io.github.codesilva.loginapp",
-        "WEB_APPLICATION_CLIENT_ID": "617836047197-9lf7nr7t46uaehc8hg495h2m9tp810bi.apps.googleusercontent.com",
-        "PLAY_SERVICES_VERSION": "15.0.1"
-      },
       "cordova-plugin-android-permissions": {},
       "cordova-plugin-request-location-accuracy": {},
-      "phonegap-plugin-mobile-accessibility": {}
+      "phonegap-plugin-mobile-accessibility": {},
+      "cordova-plugin-googleplus": {
+        "REVERSED_CLIENT_ID": "io.connectItLabs.ConnectBazar",
+        "WEB_APPLICATION_CLIENT_ID": "466240699521-gdn9hubnnt18rd30or7huenv43h9rbph.apps.googleusercontent.com",
+        "PLAY_SERVICES_VERSION": "15.0.1"
+      }
     },
     "platforms": [
       "android"

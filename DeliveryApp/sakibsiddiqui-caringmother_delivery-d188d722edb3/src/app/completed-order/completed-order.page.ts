@@ -26,7 +26,6 @@ export class CompletedOrderPage implements OnInit {
 
   ngOnInit() {
     window.addEventListener('online', () => {
-      console.log('online');
       this.router.navigateByUrl('/no-internet', { skipLocationChange: true }).then(() => {
         this.router.navigate(['/home']);
     }); 
@@ -41,7 +40,6 @@ export class CompletedOrderPage implements OnInit {
     });
     const p = this.homePageApi.getClosedOrderList();
     p.subscribe(res => {
-      console.log(res);
       this.orderList=res;
 
     },
@@ -59,7 +57,6 @@ export class CompletedOrderPage implements OnInit {
         this.router.navigate(['/no-internet']);
    
       }
-      console.log(error);
     });
   }
 
@@ -70,13 +67,11 @@ export class CompletedOrderPage implements OnInit {
   }
 
 viewParticularOrder(item) {
-  console.log(item.orderId);
   localStorage.setItem('vendorViewCart',JSON.stringify(item.orderId));
   this.router.navigate(['/order']);
 }
 
 async logout() {
-  console.log('logout');
   this.commom.logout();
 }
 

@@ -43,34 +43,38 @@ export class AllOrderPage implements OnInit {
 
     loading.present();
     const p = this.orderApi.viewOpenOrder();
-    p.subscribe(res => {
-      loading.dismiss();
-      console.log(res);
-      this.order = res;
-      // method to sort in ascending order
-      this.order.sort((a, b) => parseFloat(b.orderId) - parseFloat(a.orderId));
-      console.log('sort', this.order);
+    p.subscribe(
+      res => {
+        loading.dismiss();
+        this.order = res;
+        // method to sort in ascending order
+        this.order.sort(
+          (a, b) => parseFloat(b.orderId) - parseFloat(a.orderId)
+        );
 
-      for (let i = 0; i < this.order.length; i++) {
-        console.log('bye');
-        if (
-          this.order[i].orderStatus === 'CANCELLED_COD' ||
-          this.order[i].orderStatus === 'CANCELLED_ONLINE'
-        ) {
-          this.order[i].orderStatus = 'CANCELLED';
+        for (let i = 0; i < this.order.length; i++) {
+          if (
+            this.order[i].orderStatus === 'CANCELLED_COD' ||
+            this.order[i].orderStatus === 'CANCELLED_ONLINE'
+          ) {
+            this.order[i].orderStatus = 'CANCELLED';
+          }
         }
+      },
+      err => {
+        if (err.status === 401) {
+          this.common.presentToast('Session expired, please login again');
+          this.router.navigate(['/login']);
+        }
+        loading.dismiss();
       }
-    }, err => {
-      loading.dismiss();
-    });
+    );
   }
 
   doRefresh(event) {
     // refresh function
     this.viewOpenOrder();
-    console.log('refresh');
     setTimeout(() => {
-      console.log('Async operation has ended');
       event.target.complete();
     }, 2000);
   }

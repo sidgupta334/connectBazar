@@ -9,6 +9,7 @@ import { HomePageRoutingModule } from './home-routing.module';
 import { HomePage } from './home.page';
 import { LoginService } from '../login/login.service';
 import { HttpClientModule } from '@angular/common/http';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { Network } from '@ionic-native/network/ngx';
 import { CartService } from '../cart/cart.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
@@ -20,15 +21,16 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
     FormsModule,
     IonicModule,
     HttpClientModule,
-    HomePageRoutingModule
+    HomePageRoutingModule,
+    MatExpansionModule
   ],
   providers: [
     LoginService,
     LocationAccuracy,
     Geolocation,
     Network,
-    CartService
+    CartService,
   ],
-  declarations: [HomePage]
+  declarations: [HomePage],
 })
 export class HomePageModule {}
